@@ -10,9 +10,9 @@ if %errorlevel% neq 0 (
 
 REM [2] 기존 컨테이너 중지 및 삭제
 echo ==== Termination and deletion of existing contracts ====
-docker stop skyand-ai-lms-user-container
+docker stop shinhan-stt-container
 if %errorlevel% neq 0 echo "기존 컨테이너 없음 (중지 생략)"
-docker rm skyand-ai-lms-user-container
+docker rm shinhan-stt-container
 if %errorlevel% neq 0 echo "기존 컨테이너 없음 (삭제 생략)"
 
 REM [3] 새로운 컨테이너 실행
