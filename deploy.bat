@@ -2,7 +2,7 @@
 
 REM [1] Docker 이미지 빌드
 echo ==== Build Docker image ====
-docker build -t skyand-ai-lms-user . 
+docker build -t shinhan-stt . 
 if %errorlevel% neq 0 (
     echo [ERROR] Docker build 실패. 배포 중단.
     exit /b %errorlevel%
