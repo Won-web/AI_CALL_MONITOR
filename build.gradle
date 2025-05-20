@@ -1,0 +1,108 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'shinhan.home'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+ext {
+    queryDslVersion = "5.0.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring Boot
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.session:spring-session-data-redis'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Parameter
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+    // QueryDSL
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
+    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+    // Servlet API
+    implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+    // SLF4J
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+
+    // Utils
+    implementation 'commons-io:commons-io:2.11.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.38'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
+
+    // DB Driver
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:3.2.0'
+    
+    // sshj를 이용한 전송
+    implementation 'com.hierynomus:sshj:0.38.0'
+    
+    // mp3 -> wav 파일 변환
+    implementation 'com.googlecode.soundlibs:mp3spi:1.9.5.4'
+	implementation 'com.googlecode.soundlibs:tritonus-share:0.3.7.4'
+	implementation 'com.googlecode.soundlibs:jlayer:1.0.1.4'
+}
+
+// lombok + annotationProcessor Ȯ��
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+// QueryDSL Q타입 생성 위치 지정
+def querydslDir = "$buildDir/generated/querydsl"
+
+sourceSets {
+    main {
+        java {
+            srcDir querydslDir
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
+    source(querydslDir)
+}
+
+// bootJar
+bootJar {
+    archiveBaseName.set('shinhan_auth_api')
+    archiveVersion.set('0.0.1-SNAPSHOT')
+}
+
+// 일반 jar 비활성화
+jar {
+    enabled = false
+}

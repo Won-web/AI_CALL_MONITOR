@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- 필수 Meta 태그 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- IE 호환성 설정 -->
+    <!-- Spring Security용 csrf 태그 -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <!-- SEO 및 Social Meta -->
+    <title>RUN - Class</title>
+
+    <!-- 기본 메타 정보 START -->
+        <meta name="title" content="AI 학습 리포트 – 개인 맞춤 수업 요약과 퀴즈 결과 분석"> <!-- 페이지 제목 -->
+        <meta name="keywords" content="AI 학습 리포트, 수업 요약, 학습 결과 분석, 맞춤형 교육, AI 퀴즈, 이해도 평가, 학습 경로 추천, 교육 피드백, 온라인 교육 플랫폼, 인공지능 튜터, 교육 분석 시스템, AI 교육 리포트"> <!-- 페이지와 관련된 키워드 목록 -->
+        <meta name="description" content="AI가 수업 내용을 분석하여 자동 생성한 학습 리포트입니다. 퀴즈 결과, 이해도 분석, 보충 자료 추천까지 개인별 맞춤 정보를 제공합니다."> <!-- 페이지 설명 -->
+        <meta name="author" content="SKYAND"> <!-- 페이지 작성자의 이름 -->
+		<!-- Open Graph (OG) 메타 태그 -->
+		<meta property="og:type" content="website"> <!-- 콘텐츠 유형을 정의 (예: website, article, video 등) -->
+        <meta property="og:title" content="AI 학습 리포트 – 수업 요약과 맞춤형 학습 피드백"> <!-- 제목 -->
+        <meta property="og:description" content="수업 내용을 AI가 분석해 요약하고 퀴즈 결과 기반으로 이해도 평가 및 다음 학습 경로까지 제안합니다. 지금 내 학습 상태를 확인해보세요."> <!-- 설명 -->
+        <meta property="og:image" content="/assets/img/cover_img_1200x630.png"> <!-- 대표 이미지 (1200x630 권장) -->
+        <!-- <meta property="og:url" content="https://yourdomain.com/learning-report"> --> <!-- 공유될 실제 페이지 URL -->
+        <meta property="og:locale" content="ko_KR"> <!-- 언어 설정 -->
+		<!-- Twitter 메타 태그 -->
+		<meta property="twitter:card" content="/assets/img/cover_img_1200x630.png"> <!-- 큰 이미지가 포함된 카드 -->
+        <meta property="twitter:title" content="AI 학습 리포트 – 수업 요약과 맞춤형 학습 피드백"> <!-- 트위터 제목 -->
+        <meta property="twitter:description" content="수업 내용을 AI가 분석해 요약하고 퀴즈 결과 기반으로 이해도 평가 및 다음 학습 경로까지 제안합니다. 지금 내 학습 상태를 확인해보세요."> <!-- 트위터 설명 -->
+        <!-- <meta property="twitter:url" content="https://yourdomain.com/learning-report"> --> <!-- 페이지 URL -->
+		<meta property="twitter:image" content="/assets/img/cover_img_1200x630.png"> <!-- 트위터 카드에 표시될 이미지 URL -->
+    <!-- 기본 메타 정보 END -->
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon_32x32.png"> <!-- 브라우저 탭에 표시되는 작은 아이콘 (favicon) 설정 --> <!-- type="image/png": 아이콘의 파일 형식을 지정 --> <!-- sizes="32x32": 아이콘의 크기를 지정 (일반적인 브라우저용) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple_touch_icon_180x180.png"> <!-- Apple 디바이스(iPhone, iPad 등) 홈 화면에 추가될 때 사용할 아이콘 --> <!-- sizes="180x180": 아이콘의 크기를 지정 (애플 권장 크기) -->
+
+    <!-- 외부 라이브러리 및 스타일시트 -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/tippy.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/datatables.min.css"/>
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/rowGroup.dataTables.min.css"/> -->
+    
+
+    <!-- 사용자 정의 스타일 -->
+    <link rel="stylesheet" href="/assets/css/style.css?v=1.0">
+	<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+	<script src="/assets/js/common.js"></script>
+</head>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    initAudioSelectAndAnalyze();
+    initAudioUpload();
+});
+
+function initAudioSelectAndAnalyze() {
+    fetch("/api/audio/getAudioList")
+        .then(response => response.json())
+        .then(result => {
+            const audioList = result.audioList || [];
+            const container = document.querySelector(".r_body_classroom_con");
+
+            // 기존 자식 중 .r_audio_upload를 제외한 모든 요소 제거
+            Array.from(container.children).forEach(child => {
+                if (!child.classList.contains("r_audio_upload")) {
+                    child.remove();
+                }
+            });
+
+            // select + 버튼 wrapper 생성
+            const wrapper = document.createElement("div");
+            wrapper.className = "audio-select-wrapper";
+            wrapper.style.display = "flex";
+            wrapper.style.alignItems = "center";
+            wrapper.style.gap = "10px";
+            wrapper.style.marginBottom = "20px";
+
+            const select = document.createElement("select");
+            select.id = "audioSelect";
+            select.className = "select";
+            select.style.width = "300px";
+
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.text = "오디오를 선택하세요";
+            select.appendChild(defaultOption);
+
+            audioList.forEach(audio => {
+                const option = document.createElement("option");
+                option.value = audio.audioIdx;
+                option.text = audio.audioId + (audio.audioExt || "");
+                select.appendChild(option);
+            });
+
+            const button = document.createElement("button");
+            button.id = "goAnalyze";
+            button.className = "bs_bt gradient_ver01 small_ver";
+            button.innerText = "AI 분석 요청";
+
+            button.addEventListener("click", () => {
+                const selectedAudioIdx = select.value;
+                if (!selectedAudioIdx) {
+                    alert("오디오를 선택하세요.");
+                    return;
+                }
+
+                button.disabled = true;
+                button.innerText = "분석 중...";
+                
+	            // 업로드 버튼도 비활성화
+                const uploadButton = document.getElementById("uploadAudioBtn");
+                if (uploadButton) uploadButton.disabled = true;
+                const chatBox = document.querySelector(".r_body_classroom_chat_box_talk");
+                chatBox.innerHTML = `
+                    <div class="ai_bot loading">
+                        <div class="profile"></div>
+                        <div class="talk_group">
+                            <p class="talk_name">AI 튜터</p>
+                            <div class="talk_box">
+                                <p class="talk_box_text">분석 중입니다. 잠시만 기다려주세요...</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                fetch("/api/audio/analyzeAudio", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        [document.querySelector('meta[name="_csrf_header"]').getAttribute("content")]:
+                            document.querySelector('meta[name="_csrf"]').getAttribute("content")
+                    },
+                    body: JSON.stringify({ audioIdx: selectedAudioIdx })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log("AI 분석 결과:", data);
+                    renderSegmentsToChat(data.segments);
+                })
+                .catch(err => {
+                    console.error("분석 요청 실패", err);
+                    alert("AI 분석 중 오류가 발생했습니다.");
+                    chatBox.innerHTML = "<p>오류가 발생했습니다. 다시 시도해주세요.</p>";
+                })
+                .finally(() => {
+                    button.disabled = false;
+                    button.innerText = "AI 분석 요청";
+                    const uploadButton = document.getElementById("uploadAudioBtn");
+                    if (uploadButton) uploadButton.disabled = false;
+                });
+            });
+
+            wrapper.appendChild(select);
+            wrapper.appendChild(button);
+            container.appendChild(wrapper);
+        });
+}
+
+function initAudioUpload() {
+    const uploadBtn = document.getElementById("uploadAudioBtn");
+    const fileInput = document.getElementById("audioFileInput");
+	
+    console.log("CSRF Header:", document.querySelector('meta[name="_csrf_header"]')?.getAttribute("content"));
+    console.log("CSRF Token:", document.querySelector('meta[name="_csrf"]')?.getAttribute("content"));
+    
+    if (uploadBtn && fileInput) {
+        uploadBtn.addEventListener("click", function () {
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("파일을 선택해주세요.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            fetch("/api/upload/audio", {
+                method: "POST",
+                headers: {
+                    [document.querySelector('meta[name="_csrf_header"]').getAttribute("content")]:
+                        document.querySelector('meta[name="_csrf"]').getAttribute("content")
+                },
+                body: formData
+            })
+            .then(res => res.text())
+            .then(msg => {
+                alert(msg);
+                location.reload();
+            })
+            .catch(err => {
+                console.error(err);
+                alert("파일 업로드 실패");
+            });
+        });
+    }
+}
+
+
+function renderSegmentsToChat(segments) {
+    const chatBox = document.querySelector(".r_body_classroom_chat_box_talk");
+    chatBox.innerHTML = ""; // 기존 내용 비우기
+
+    if (!Array.isArray(segments) || segments.length === 0) {
+        chatBox.innerHTML = "<p>분석된 대화가 없습니다.</p>";
+        return;
+    }
+
+    segments.forEach(segment => {
+        const { timestamp, speaker, contents } = segment;
+
+        const aiHtml = `
+            <div class="ai_bot">
+                <div class="profile"></div>
+                <div class="talk_group">
+                    <p class="talk_name">${speaker} (${timestamp})</p>
+                    <div class="talk_box">
+                        <p class="talk_box_text">${contents}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        chatBox.insertAdjacentHTML("beforeend", aiHtml);
+    });
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+</script>
+<body>
+    <main class="r_main">
+
+<!--         <div class="r_nav"> -->
+<!--             <section class="r_nav_logo"> -->
+<!--                 <img class="r_nav_logo_img" src="/assets/img/3d_logo.png" alt="RUN Logo"> -->
+<!--             </section> -->
+<!--             <nav class="r_nav_body"> -->
+<!--                 <a class="r_nav_body_link" href="#"> -->
+<!--                     <svg viewBox="0 0 45.35 45.35"><path d="M15.38,19.82H4.44c-2.45,0-4.44-1.99-4.44-4.44V4.44C0,1.99,1.99,0,4.44,0h10.94C17.83,0,19.82,1.99,19.82,4.44v10.94c0,2.45-1.99,4.44-4.44,4.44ZM4.5,15.32h10.82V4.5H4.5v10.82ZM15.38,4.5h0,0Z"/><path d="M40.91,19.82h-10.94c-2.45,0-4.44-1.99-4.44-4.44V4.44C25.53,1.99,27.52,0,29.97,0h10.94C43.36,0,45.35,1.99,45.35,4.44v10.94c0,2.45-1.99,4.44-4.44,4.44ZM30.04,15.38h0s0,0,0,0ZM30.04,15.32h10.82V4.5h-10.88l.06,10.82ZM40.91,4.5h0,0Z"/><path d="M15.38,45.35H4.44c-2.45,0-4.44-1.99-4.44-4.44v-10.94c0-2.45,1.99-4.44,4.44-4.44h10.94c2.45,0,4.44,1.99,4.44,4.44v10.94c0,2.45-1.99,4.44-4.44,4.44ZM4.5,40.85h10.82v-10.82H4.5v10.82ZM15.38,30.04h0,0Z"/><path d="M40.91,45.35h-10.94c-2.45,0-4.44-1.99-4.44-4.44v-10.94c0-2.45,1.99-4.44,4.44-4.44h10.94c2.45,0,4.44,1.99,4.44,4.44v10.94c0,2.45-1.99,4.44-4.44,4.44ZM30.04,40.91h0s0,0,0,0ZM30.04,40.85h10.82v-10.82h-10.88l.06,10.82ZM40.91,30.04h0,0Z"/></svg> -->
+<!--                     학습 개요 -->
+<!--                 </a> -->
+<!--                 <a class="r_nav_body_link active" href="#"> -->
+<!--                     <svg viewBox="0 0 45.35 45.35"><defs><style>.cls-1{fill:none;}</style></defs><rect class="cls-1" width="45.35" height="45.35"/><path d="M26.95,41.1c-.35,0-.69-.08-1.01-.24-.76-.38-1.24-1.16-1.24-2.01V14.95c0-.85.48-1.63,1.24-2.01.76-.38,1.67-.31,2.35.2l16.15,11.95c.57.42.91,1.1.91,1.81s-.34,1.39-.91,1.81l-16.15,11.95c-.39.29-.86.44-1.34.44ZM29.2,19.42v14.96l10.11-7.48-10.11-7.48Z"/><path d="M17.84,41.1H2.25c-1.24,0-2.25-1.01-2.25-2.25s1.01-2.25,2.25-2.25h15.59c1.24,0,2.25,1.01,2.25,2.25s-1.01,2.25-2.25,2.25ZM17.84,24.93H2.25c-1.24,0-2.25-1.01-2.25-2.25s1.01-2.25,2.25-2.25h15.59c1.24,0,2.25,1.01,2.25,2.25s-1.01,2.25-2.25,2.25ZM38.59,8.76H2.25c-1.24,0-2.25-1.01-2.25-2.25s1.01-2.25,2.25-2.25h36.34c1.24,0,2.25,1.01,2.25,2.25s-1.01,2.25-2.25,2.25Z"/></svg> -->
+<!--                     강의 목록 -->
+<!--                 </a> -->
+<!--                 <a class="r_nav_body_link" href="#"> -->
+<!--                     <svg viewBox="0 0 45.35 45.35"><path d="M44.03,17.21c-.85-.85-1.99-1.32-3.2-1.32h-.21l-.45-1.1.15-.15c.85-.85,1.32-1.99,1.32-3.19s-.47-2.34-1.32-3.2l-3.21-3.21c-.85-.85-1.99-1.32-3.2-1.32s-2.34.47-3.2,1.32l-.15.15-1.1-.45v-.21c0-1.21-.47-2.34-1.32-3.2C27.29.47,26.15,0,24.95,0h-4.54C19.22,0,18.05.48,17.21,1.32c-.85.85-1.32,1.99-1.32,3.2v.21l-1.1.45-.15-.15c-.85-.85-1.99-1.32-3.2-1.32s-2.34.47-3.2,1.32l-3.21,3.21c-.85.85-1.32,1.99-1.32,3.2s.47,2.34,1.32,3.2l.15.15-.45,1.1h-.21c-1.19,0-2.36.48-3.2,1.32C.47,18.06,0,19.2,0,20.41v4.54C0,26.14.48,27.3,1.32,28.14c.84.84,2.01,1.33,3.2,1.33h.21l.45,1.1-.15.15c-.85.85-1.32,1.99-1.32,3.2s.47,2.34,1.32,3.2l3.21,3.21c.85.85,1.99,1.32,3.2,1.32s2.34-.47,3.19-1.32l.15-.15,1.1.45v.21c0,1.19.48,2.36,1.32,3.2.84.84,2.01,1.32,3.2,1.32h4.54c1.21,0,2.34-.47,3.2-1.32.84-.84,1.32-2.01,1.32-3.2v-.21l1.09-.45.15.15c.85.85,1.99,1.32,3.2,1.32s2.34-.47,3.2-1.32l3.21-3.21c.85-.85,1.32-1.99,1.32-3.19s-.47-2.34-1.32-3.2l-.15-.15.45-1.1h.21c1.21,0,2.34-.47,3.19-1.32.84-.84,1.33-2.01,1.33-3.2v-4.54c0-1.21-.47-2.34-1.32-3.2ZM40.85,24.95l-1.74.02c-.91,0-1.73.55-2.08,1.39l-1.6,3.87c-.35.84-.16,1.81.49,2.45l1.22,1.24-3.23,3.21-1.22-1.22c-.64-.64-1.61-.84-2.45-.49l-3.87,1.61c-.84.35-1.39,1.17-1.39,2.08l-.02,1.74-4.56-.02v-1.72c0-.91-.55-1.73-1.39-2.08l-3.87-1.6c-.28-.12-.57-.17-.86-.17-.59,0-1.16.23-1.59.66l-1.24,1.22-3.21-3.24,1.21-1.22c.64-.64.83-1.61.49-2.45l-1.6-3.87c-.35-.84-1.17-1.39-2.08-1.39l-1.74-.02.02-4.56h1.72c.91,0,1.73-.55,2.08-1.39l1.61-3.87c.35-.84.16-1.81-.49-2.45l-1.22-1.24,3.24-3.21,1.22,1.21c.64.64,1.61.83,2.45.49l3.87-1.6c.84-.35,1.39-1.17,1.39-2.08l.02-1.74,4.56.02v1.72c0,.91.55,1.73,1.39,2.08l3.87,1.6c.84.35,1.81.16,2.45-.49l1.24-1.22,3.21,3.23-1.21,1.22c-.64.64-.83,1.61-.49,2.45l1.6,3.87c.35.84,1.17,1.39,2.08,1.39l1.74.02v4.54Z"/><path d="M22.68,13.62c-5,0-9.06,4.06-9.06,9.06s4.06,9.06,9.06,9.06,9.06-4.06,9.06-9.06-4.06-9.06-9.06-9.06ZM22.68,27.23c-2.51,0-4.56-2.04-4.56-4.56s2.04-4.56,4.56-4.56,4.56,2.04,4.56,4.56-2.04,4.56-4.56,4.56Z"/></svg> -->
+<!--                     설정 -->
+<!--                 </a> -->
+<!--             </nav> -->
+<!--         </div> -->
+
+        <div class="r_body classroom_ver">
+
+            <div class="r_body_classroom function_01_action_chat">
+                <div class="r_body_classroom_con">
+                	<div class="r_audio_upload" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+				        <input type="file" id="audioFileInput" accept=".mp3, .wav" />
+				        <button id="uploadAudioBtn" class="bs_bt gradient_ver01 small_ver">오디오 업로드</button>
+				    </div>
+                </div>
+                <div class="r_body_classroom_chat">
+                    <button class="r_body_classroom_chat_close function_01_click_close_chat">
+                        <svg width="45.354" height="45.353" viewBox="0 0 45.354 45.353">
+                            <defs>
+                              <clipPath>
+                                <rect width="45.354" height="45.353" transform="translate(0 0)" fill="none"/>
+                              </clipPath>
+                            </defs>
+                            <g clip-path="url(#clip-path)">
+                              <path d="M25.861,22.677,44.694,3.844A2.251,2.251,0,1,0,41.51.66L22.677,19.493,3.843.66A2.251,2.251,0,1,0,.659,3.844L19.493,22.677.659,41.51a2.251,2.251,0,1,0,3.184,3.184L22.677,25.861,41.51,44.694a2.251,2.251,0,1,0,3.184-3.184Z"/>
+                            </g>
+                          </svg>                          
+                    </button>
+                    <div class="r_body_classroom_chat_title">
+                        <div class="r_body_classroom_chat_title_img"></div>
+                        <h4 class="r_body_classroom_chat_title_text">
+                            전화 내용
+                        </h4>
+                    </div>
+
+                    <div class="r_body_classroom_chat_box">
+
+                        <div class="r_body_classroom_chat_box_talk">
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="r_body_classroom_bt_wrapper">
+                    <button class="bs_bt r_body_classroom_bt function_01_click_open_chat">
+                        <img src="/assets/img/list_img_03.png" alt="AI 튜터">
+                    </button>
+                    <p class="r_body_classroom_bt_text">
+                        AI Tutor
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+
+
+    <!-- 외부 라이브러리 및 스크립트 -->
+    <!-- Tippy.js --> <!-- Popper.js -->
+    <script src="/assets/js/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/select2.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/tippy-bundle.umd.min.js"></script>
+    <script src="/assets/js/datatables.min.js"></script>
+    <!-- <script type="text/javascript" src="/assets/js/dataTables.rowGroup.min.js"></script> -->
+    <!-- Style Script -->
+    <script src="/assets/js/js_style.js"></script>
+</body>
+</html>
