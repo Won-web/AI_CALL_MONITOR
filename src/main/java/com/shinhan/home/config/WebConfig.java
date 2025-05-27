@@ -35,6 +35,7 @@ public class WebConfig implements WebMvcConfigurer {
             	    "/message/audio",
             	    "/api/upload/**",
             	    "/api/audio/**",
+            	    "/dashboard/**",
             	    "/error"
         	); // ?��?�� 경로
     }

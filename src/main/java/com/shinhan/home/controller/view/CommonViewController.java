@@ -30,14 +30,14 @@ public class CommonViewController {
         HttpSession session = req.getSession(false);
 
         // 세션이 있으면 dashboard로 리다이렉트
-        if (session != null && session.getAttribute("userIdx") != null) {
-        	System.out.println("세션 : "+session.getAttribute("userIdx")+ ","+ session.getAttribute("name"));
-            ModelAndView mv = new ModelAndView("redirect:/message/audio");
-            return mv;
-        }
+//        if (session != null && session.getAttribute("userIdx") != null) {
+//        	System.out.println("세션 : "+session.getAttribute("userIdx")+ ","+ session.getAttribute("name"));
+//            ModelAndView mv = new ModelAndView("redirect:/login");
+//            return mv;
+//        }
 
         // 세션이 없으면 login 페이지로 리다이렉트
-        ModelAndView mv = new ModelAndView("redirect:/message/audio");
+        ModelAndView mv = new ModelAndView("redirect:/dashboard");
         return mv;
     }
 	
@@ -67,7 +67,7 @@ public class CommonViewController {
 		logger.debug(req.getRequestURL().toString()+" 페이지 요청");
 		ModelAndView mv = null;
 		
-		mv = new ModelAndView("body/home/home");
+		mv = new ModelAndView("body/dashboard/home");
 		
 		mv.addObject("serverStartTime", CommonValue.SERVER_START_DT);
 		

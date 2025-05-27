@@ -63,7 +63,6 @@ public class AudioController {
     @PostMapping("/analyzeAudio")
     @ResponseBody
     public Map<String, Object> analyzeAudio(@RequestBody Map<String, Object> input) {
-        System.out.println("오디오 분석 테스트, "+input.get("audioIdx").toString());
     	Map<String, Object> result = new HashMap<>();
 
         // JSON에서 audioIdx 추출
@@ -71,13 +70,18 @@ public class AudioController {
         RunAudioInfoTbDTO eDTO = runAudioInfoService.getRunAudioInfo(audioIdxStr);
         
         if(null != eDTO.getAudioUrl()) {
-        	System.out.println("파일 url : " + eDTO.getAudioUrl());
         	String audioUrl = eDTO.getAudioEncodedName() + eDTO.getAudioExt();
         	Map<String, Object> resultMap = sendToAiForAnalysis(audioUrl);
-        	System.out.println("결과 : " + resultMap.toString());
-        	result.put("segments", resultMap.get("segments"));
-        	result.put("status", "success");
-            result.put("message", "분석 요청 수신 완료");
+        	if(null == resultMap) {
+        		result.put("segments", null);
+        		result.put("status", "failed");
+                result.put("message", "분석 요청 수신 거부");
+        	} else {
+        		result.put("segments", resultMap.get("segments"));
+            	result.put("status", "success");
+                result.put("message", "분석 요청 수신 완료");
+        	}
+        	
         } else {
         	result.put("segments", null);
         	result.put("status", "failed");
@@ -98,7 +102,6 @@ public class AudioController {
 
         // 인코딩은 GET 요청할 경우에만 필요
         //String encodedUrl = URLEncoder.encode(audioUrl, StandardCharsets.UTF_8);
-        System.out.println("오디오 url 테스트 : "+audioUrl);
         // GET 요청을 보낼 경우 예:
         String aiUrl = aiServerUrl + "/analyzeAudio?audio_url=" + audioUrl;
 
@@ -119,16 +122,16 @@ public class AudioController {
             InetAddress inetAddress = InetAddress.getLocalHost();
             String hostAddress = inetAddress.getHostAddress(); // 예: 192.168.0.123
             // 로컬개발 시
-            String port = ":18081";
+            String port = ":18082";
             // 200번 서버에서 동작할 시
             if(hostAddress.contains("192.168.45.200")) {
             	hostAddress = "dev.skyand.co.kr";
-            	port = ":8010";
+            	port = ":8012";
             }
             return "http://" + hostAddress + port;
         } catch (UnknownHostException e) {
             e.printStackTrace();
-            return "http://localhost:18081"; // fallback
+            return "http://localhost:18082"; // fallback
         }
     }
 }
