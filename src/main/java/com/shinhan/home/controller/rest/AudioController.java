@@ -92,11 +92,19 @@ public class AudioController {
         return result;
     }
     
-//    @PostMapping("/llmCorrect")
-//    @ResponseBody
-//    public Map<String, Object> analyzeAudio() {
-//    	
-//    }
+    @PostMapping("/llmCorrect")
+    @ResponseBody
+    public Map<String, Object> llmCorrect(@RequestBody Map<String, Object> input) {
+        Map<String, Object> result = new HashMap<>();
+
+        Object segments = input.get("segments");
+        System.out.println("받은 segments: ");
+        System.out.println(segments);
+
+        result.put("status", "success");
+        result.put("message", "segments 수신 완료");
+        return result;
+    }
     
     
     public Map<String, Object> sendToAiForAnalysis(String audioUrl, String diarization) {
