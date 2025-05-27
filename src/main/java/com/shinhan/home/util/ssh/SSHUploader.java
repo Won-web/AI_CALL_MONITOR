@@ -46,9 +46,9 @@ public class SSHUploader {
         keyFile.init(new File(pemFilePath), finder);
 
         ssh.authPublickey(username, keyFile);
-
         try (SFTPClient sftpClient = ssh.newSFTPClient()) {
             sftpClient.put(localFilePath, remoteDir + "/" + file.getName());
+            sftpClient.chmod(remoteDir + "/" + file.getName(), 0755);
             logger.info("EC2 업로드 성공: ", file.getName());
         } catch (Exception e) {
             logger.error("EC2 업로드 실패: ", e.getMessage(), e);
