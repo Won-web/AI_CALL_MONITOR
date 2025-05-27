@@ -72,8 +72,12 @@
         </section>
 
         <section class="stt_header_info">
-
             <nav class="stt_header_info_menu">
+            	<a class="stt_header_info_menu_link" href="javascript:void(0);" onclick="openAudioPopup()">
+				    <p class="stt_header_info_menu_link_text">
+				    	AI 분석
+				    </p>
+				</a>
                 <a class="stt_header_info_menu_link" href="/dashboard/home">
                     <p class="stt_header_info_menu_link_text">
                         대시보드
@@ -878,7 +882,15 @@
 
     <!-- Style Script -->
     <script src="/assets/js/js_style.js"></script>
-
+	<script type="text/javascript">
+		function openAudioPopup() {
+		    window.open(
+		        "/message/audio",
+		        "audioPopup",
+		        "width=1000,height=700,resizable=yes,scrollbars=yes"
+		    );
+		}
+	</script>
 
 
 
