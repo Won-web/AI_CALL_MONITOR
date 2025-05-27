@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+
+
+
+
+<head>
+    <!-- 필수 Meta 태그 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- IE 호환성 설정 -->
+    
+    <!-- SEO 및 Social Meta -->
+    <title>Shinhan STT</title>
+
+    <!-- 기본 메타 정보 START -->
+
+    <!-- 기본 메타 정보 END -->
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png"> <!-- 브라우저 탭에 표시되는 작은 아이콘 (favicon) 설정 --> <!-- type="image/png": 아이콘의 파일 형식을 지정 --> <!-- sizes="32x32": 아이콘의 크기를 지정 (일반적인 브라우저용) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png"> <!-- Apple 디바이스(iPhone, iPad 등) 홈 화면에 추가될 때 사용할 아이콘 --> <!-- sizes="180x180": 아이콘의 크기를 지정 (애플 권장 크기) -->
+
+    <!-- 외부 라이브러리 및 스타일시트 -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/select2.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/tippy.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/swiper-bundle.min.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/rowGroup.dataTables.min.css"/> -->
+    
+
+    <!-- 사용자 정의 스타일 -->
+    <link rel="stylesheet" href="/assets/css/style.css?v=1.0">
+
+
+
+</head>
+
+
+
+
+
+<body>
+
+
+
+
+
+    <header class="stt_header stt_m_menu_action_area">
+
+        <section class="stt_header_logo">
+            <div class="stt_header_logo_name">
+                <h4 class="stt_header_logo_name_title">
+                    Sky-VIEW
+                </h4>
+                <p class="stt_header_logo_name_subtitle">
+                    고객 상담내역 AI 모니터링 플랫폼
+                </p>
+            </div>
+            <div class="stt_header_logo_company">
+                <svg width="120" height="20" viewBox="0 0 120 20">
+                    <g>
+                        <g>
+                            <path d="M10.195,0A10.1,10.1,0,0,0,0,10,10.1,10.1,0,0,0,10.195,20,10.1,10.1,0,0,0,20.389,10,10.1,10.1,0,0,0,10.195,0m.213,18.168a7.72,7.72,0,0,1-4.55-.969,6.111,6.111,0,0,1-2.335-2.571c-.464-.947-.684-2.1-.189-2.039.233.027.432.458.88,1.02.307.384.588.707.8.751.1.02.174-.023.242-.149a5.281,5.281,0,0,1,.6-1.055c.247-.28.545-.411.718.273a9.071,9.071,0,0,1,.188,1c.054.432.083.691.236.764s.4-.02.8-.168c.288-.105.658-.239,1.126-.371.431-.121.7-.058.427.6a5.812,5.812,0,0,1-.73,1.229.233.233,0,0,0,.036.33,3.444,3.444,0,0,0,.9.5,8.082,8.082,0,0,0,.927.316c.384.108.309.488-.077.541m5.231-2.15a5.054,5.054,0,0,1-2.141,1.7c-.147.064-.3.044-.341-.072s.047-.218.143-.329c1.257-1.6.323-3.066-1.706-4.2-1.5-.841-2.453-1.324-3.559-1.963C4.793,9.273,4.167,7.642,4.04,6.677c-.32-2.438,1.735-4.263,3.848-4.7.064-.013.234-.04.288.1s-.07.238-.144.282A3.147,3.147,0,0,0,6.26,5.15c.057.673.35,1.639,2.2,2.936,1.119.783,2.49,1.426,5.255,3.051,2.921,1.718,2.588,3.812,1.919,4.88M16.1,6.871c-.667.8-1.334.5-1.847-.625-.32-.7-.742-.872-1.039-.688-.324.2-.2.683.167,1.238a.835.835,0,0,1-.116,1.043,1.219,1.219,0,0,1-1.145.271c-.822-.178-1.63-1.258-1.04-3.616a1.679,1.679,0,0,0-.522-1.725c-.148-.183-.166-.293-.112-.368s.195-.086.437-.036c.316.066.786.224,1.168.282a4.522,4.522,0,0,0,.843.038,4.033,4.033,0,0,1,2.042.394c1.049.509,1.156,1.387.573,1.317a2.648,2.648,0,0,1-.677-.277c-.145-.068-.268-.09-.36-.026a.248.248,0,0,0-.062.315c.13.269.571.408,1.168.57a1.09,1.09,0,0,1,.52,1.89" fill="#fff"/>
+                        </g>
+                    </g>
+                    <path d="M12.739-30.118v-8.166a1.459,1.459,0,0,0-.4-1.162c-.193-.236-.064-.44.177-.44h2.753v9.768ZM4.947-38.049a1.4,1.4,0,0,0-.338-1.131c-.193-.236-.064-.455.161-.455H7.555v2.089c0,2.057,2.061,3.266,3.928,3.879L10.791-32.4c-.209.377-1,.236-2.383-.6a7.363,7.363,0,0,1-2.044-1.759,8,8,0,0,1-2.189,2.073c-.982.628-2.238,1.225-2.447.832L.987-33.212c2.141-.817,3.96-2.183,3.96-4.177ZM6.3-25.3c-1.948,0-2.672-.33-2.672-1.916v-2.434a1.192,1.192,0,0,0-.338-.817c-.193-.236-.064-.455.161-.455H6.187v3.2c0,.565.209.644.741.644H15.54V-25.3ZM20.869-38.724a1.47,1.47,0,0,0-.338-1.162c-.209-.236-.08-.44.161-.44h2.753v1.759H27.1v1.727h-1.69a2.95,2.95,0,0,1,.8,2.026c0,1.979-1.5,3.486-4.169,3.486-2.656,0-4.169-1.508-4.169-3.486a2.94,2.94,0,0,1,.773-2.026h-1.69v-1.727h3.912ZM28.4-29.9v-8.386a1.492,1.492,0,0,0-.386-1.162c-.209-.236-.08-.44.161-.44H30.93v3.706h1.835v1.775H30.93V-29.9Zm2.721,2.827V-25.3h-9c-1.948,0-2.753-.408-2.753-1.994v-1.727a1.192,1.192,0,0,0-.338-.817c-.193-.236-.064-.455.161-.455h2.737v2.575c0,.565.209.644.741.644Zm-9.08-5.983A1.718,1.718,0,0,0,23.8-34.892a1.723,1.723,0,0,0-1.755-1.884,1.715,1.715,0,0,0-1.755,1.884A1.709,1.709,0,0,0,22.044-33.055Zm22.892,2.937v-8.166a1.459,1.459,0,0,0-.4-1.162c-.193-.236-.064-.44.177-.44h2.753v9.768Zm-7.792-7.931a1.4,1.4,0,0,0-.338-1.131c-.193-.236-.064-.455.161-.455h2.785v2.089c0,2.057,2.061,3.266,3.928,3.879L42.988-32.4c-.209.377-1,.236-2.383-.6a7.363,7.363,0,0,1-2.044-1.759,8,8,0,0,1-2.189,2.073c-.982.628-2.238,1.225-2.447.832l-.741-1.366c2.141-.817,3.96-2.183,3.96-4.177ZM38.5-25.3c-1.948,0-2.672-.33-2.672-1.916v-2.434a1.192,1.192,0,0,0-.338-.817c-.193-.236-.064-.455.161-.455h2.737v3.2c0,.565.209.644.741.644h8.613V-25.3Zm26.16-7.852v1.7H49.314v-1.7h3.139v-1.963A2.284,2.284,0,0,1,51.1-37.169c0-1.665,1.787-2.937,5.892-2.937S62.9-38.834,62.9-37.169A2.312,2.312,0,0,1,61.517-35.1v1.947Zm-1.674,5.292c0,1.884-2.27,3.031-5.989,3.031-3.8,0-6-1.131-6-3.031s2.205-3.031,6-3.031C60.712-30.888,62.982-29.757,62.982-27.857Zm-2.511,0c0-.927-1.159-1.351-3.477-1.351s-3.493.424-3.493,1.351c0,.942,1.175,1.366,3.493,1.366S60.471-26.915,60.471-27.857Zm-6.858-9.313c0,.942,1.111,1.241,3.381,1.241s3.381-.3,3.381-1.241c0-.879-1.191-1.288-3.381-1.288S53.613-38.049,53.613-37.169Zm3.381,2.89a16.548,16.548,0,0,1-2.077-.11v1.241h4.137V-34.39A16.453,16.453,0,0,1,56.993-34.28Zm22.844,6.125c0,2.042-2.077,3.282-5.812,3.282-3.848,0-5.844-1.225-5.844-3.282s2-3.3,5.844-3.3C77.76-31.453,79.837-30.2,79.837-28.155ZM72.5-32.8a6.538,6.538,0,0,1-1.867-1.665,7.227,7.227,0,0,1-2.189,2.089c-.982.628-2.366,1.256-2.576.864l-.724-1.366c2.27-.8,4.105-2.293,4.105-4.209v-.66H65.976v-1.727h9v1.727H71.852v.6c0,1.759,2,3.251,3.848,3.722l-.708,1.413C74.879-31.783,73.655-32.066,72.5-32.8Zm2.012-2.1v-1.775h2.785v-1.6a1.492,1.492,0,0,0-.386-1.162c-.209-.236-.08-.44.161-.44h2.753v8.213H77.293v-3.235Zm2.785,6.753c0-.927-.885-1.539-3.268-1.539-2.447,0-3.3.612-3.3,1.539,0,.958.853,1.508,3.3,1.508C76.408-26.648,77.293-27.2,77.293-28.155Zm8.741-2.623c-1.916,0-2.769-.55-2.769-2.057V-37.8a1.518,1.518,0,0,0-.419-1.146c-.193-.251-.08-.455.161-.455h2.753v2.733h6.665V-39.4h2.5v8.622H90.494v2.513h6.359v1.775H81.511v-1.775h6.375v-2.513Zm.644-1.759h5.747v-2.387H85.761v1.445C85.761-32.929,85.922-32.537,86.679-32.537Z" transform="translate(23.147 42.45)" fill="#fff"/>
+                </svg>
+            </div>
+        </section>
+
+        <section class="stt_header_info">
+
+            <nav class="stt_header_info_menu">
+                <a class="stt_header_info_menu_link active" href="#">
+                    <p class="stt_header_info_menu_link_text">
+                        대시보드
+                    </p>
+                </a>
+                <a class="stt_header_info_menu_link" href="/dashboard/counseling">
+                    <p class="stt_header_info_menu_link_text">
+                        상담내역 상세 
+                    </p>
+                </a>
+                <a class="stt_header_info_menu_link" href="/dashboard/provision">
+                    <p class="stt_header_info_menu_link_text">
+                        분류 및 규정 준수여부 상세
+                    </p>
+                </a>
+            </nav>
+
+            <div class="stt_header_info_user">
+                <div class="stt_header_info_user_profile">
+                    <button class="stt_header_info_user_profile_photo" href="#">
+                        
+                    </button>
+                    <p class="stt_header_info_user_profile_name">
+                        신진아
+                    </p>
+                </div>
+                <button class="stt_header_info_user_button">
+                    <svg width="25" height="25" viewBox="0 0 25 25">
+                        <defs>
+                            <clipPath id="clip-path">
+                                <rect width="25" height="25" fill="#fff"/>
+                            </clipPath>
+                        </defs>
+                        <g clip-path="url(#clip-path)">
+                            <path d="M8.333,22.222H5.555a2.782,2.782,0,0,1-2.778-2.778V5.555A2.781,2.781,0,0,1,5.555,2.778H8.333A1.389,1.389,0,0,0,8.333,0H5.555A5.559,5.559,0,0,0,0,5.555V19.444A5.561,5.561,0,0,0,5.555,25H8.333a1.389,1.389,0,0,0,0-2.778" transform="translate(0)" fill="#fff"/>
+                            <path d="M22.9,9.97a1.376,1.376,0,0,0-.3-.452L17.038,3.964a1.388,1.388,0,0,0-1.964,1.963l3.184,3.186H4.944a1.388,1.388,0,1,0,0,2.777H18.258l-3.184,3.186a1.388,1.388,0,0,0,1.964,1.962l5.555-5.556A1.377,1.377,0,0,0,23,10.5V10.5a1.37,1.37,0,0,0-.1-.527" transform="translate(2 2)" fill="#fff"/>
+                        </g>
+                    </svg>
+                    Logout
+                </button>
+            </div>
+
+        </section>
+
+        <button class="stt_header_mbt bs_bt white_ver stt_m_menu_click">
+            <div class="stt_header_mbt_first"></div>
+            <div class="stt_header_mbt_second"></div>
+            <div class="stt_header_mbt_third"></div>
+        </button>
+
+    </header>
+
+
+
+
+
+
+
+
+
+
+    <main class="stt_body">
+
+        <section class="stt_body_top">
+            <h4 class="stt_body_top_title">
+                전체 현황 조회
+            </h4>
+            <div class="stt_body_top_option">              
+                <input type="date">              
+            </div>
+        </section>
+
+        <section class="stt_body_con vertical_ver">
+
+            <div class="stt_body_con_ver_li">
+                <div class="stt_body_con_ver_li_card">
+                    <div class="stt_body_con_ver_li_card_title">
+                        <h6 class="stt_body_con_ver_li_card_title_text">
+                            누적 상담내역
+                        </h6>
+                    </div>
+                    <div class="stt_body_con_ver_li_card_info">
+                        <canvas id="myDoughnutChart"></canvas>
+                    </div>
+                </div>
+                <div class="stt_body_con_ver_li_card">
+                    <div class="stt_body_con_ver_li_card_title">
+                        <h6 class="stt_body_con_ver_li_card_title_text">
+                            카테고리별 건수
+                        </h6>
+                    </div>
+                    <div class="stt_body_con_ver_li_card_info">
+                        <div class="dh_chart_02">
+
+                            <div class="dh_chart_02_item">
+                                <p class="dh_chart_02_item_name">
+                                    채무 상환 문의/독려
+                                </p>
+                                <div class="dh_chart_02_item_chart">
+                                    <div class="dh_chart_02_item_chart_result" style="width: 90%;">
+                                        <div class="dh_chart_02_item_chart_bar">
+                                        <p class="dh_chart_02_item_chart_bar_number">
+                                            34K
+                                        </p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dh_chart_02_item">
+                                <p class="dh_chart_02_item_name">
+                                    채무 조정/감면 상담
+                                </p>
+                                <div class="dh_chart_02_item_chart">
+                                    <div class="dh_chart_02_item_chart_result" style="width: 85%;">
+                                        <div class="dh_chart_02_item_chart_bar">
+                                            <p class="dh_chart_02_item_chart_bar_number">
+                                                21.1K
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dh_chart_02_item">
+                                <p class="dh_chart_02_item_name">
+                                    대출 상품 문의/안내
+                                </p>
+                                <div class="dh_chart_02_item_chart">
+                                    <div class="dh_chart_02_item_chart_result" style="width: 45%;">
+                                        <div class="dh_chart_02_item_chart_bar">
+                                            <p class="dh_chart_02_item_chart_bar_number">
+                                                11.7K
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dh_chart_02_item">
+                                <p class="dh_chart_02_item_name">
+                                    민원 접수
+                                </p>
+                                <div class="dh_chart_02_item_chart">
+                                    <div class="dh_chart_02_item_chart_result" style="width: 35%;">
+                                        <div class="dh_chart_02_item_chart_bar">
+                                            <p class="dh_chart_02_item_chart_bar_number">
+                                                8.2K
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dh_chart_02_item">
+                                <p class="dh_chart_02_item_name">
+                                    단순 안내/정보 제공
+                                </p>
+                                <div class="dh_chart_02_item_chart">
+                                    <div class="dh_chart_02_item_chart_result" style="width: 10%;">
+                                        <div class="dh_chart_02_item_chart_bar">
+                                            <p class="dh_chart_02_item_chart_bar_number">
+                                                4.1K
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dh_chart_02_item">
+                                <p class="dh_chart_02_item_name">
+                                    재산 조사/실사 안내
+                                </p>
+                                <div class="dh_chart_02_item_chart">
+                                    <div class="dh_chart_02_item_chart_result" style="width: 7%;">
+                                        <div class="dh_chart_02_item_chart_bar">
+                                            <p class="dh_chart_02_item_chart_bar_number">
+                                                2K
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dh_chart_02_item">
+                                <p class="dh_chart_02_item_name">
+                                    고객 만족도 조사
+                                </p>
+                                <div class="dh_chart_02_item_chart">
+                                    <div class="dh_chart_02_item_chart_result" style="width: 3%;">
+                                        <div class="dh_chart_02_item_chart_bar">
+                                            <p class="dh_chart_02_item_chart_bar_number">
+                                                1.3K
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dh_chart_02_item">
+                                <p class="dh_chart_02_item_name">
+                                    상환 약속 완료
+                                </p>
+                                <div class="dh_chart_02_item_chart">
+                                    <div class="dh_chart_02_item_chart_result" style="width: 3%;">
+                                        <div class="dh_chart_02_item_chart_bar">
+                                            <p class="dh_chart_02_item_chart_bar_number">
+                                                1.1K
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="stt_body_con_ver_li_card">
+                    <div class="stt_body_con_ver_li_card_title">
+                        <h6 class="stt_body_con_ver_li_card_title_text">
+                            규정 준수/미준수 건수
+                        </h6>
+                    </div>
+                    <div class="stt_body_con_ver_li_card_info">
+                        <div class="bs_table dh_table_01">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>번호</th>
+                                        <th>카테고리 항목</th>
+                                        <th>준수</th>
+                                        <th>미준수</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>01</td>
+                                        <td>스크립트/상담 매뉴얼 준수 여부</td>
+                                        <td>9.8K</td>
+                                        <td>150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>02</td>
+                                        <td>정보 확인 절차 준수 여부</td>
+                                        <td>9.9K</td>
+                                        <td>80</td>
+                                    </tr>
+                                    <tr>
+                                        <td>03</td>
+                                        <td>업무 처리 절차 준수 여부</td>
+                                        <td>9.7K</td>
+                                        <td>220</td>
+                                    </tr>
+                                    <tr>
+                                        <td>04</td>
+                                        <td>상담 종료 절차 준수 여부</td>
+                                        <td>9.8K</td>
+                                        <td>110</td>
+                                    </tr>
+                                    <tr>
+                                        <td>05</td>
+                                        <td>시스템 입력/기록 정확성</td>
+                                        <td>9.6K</td>
+                                        <td>350</td>
+                                    </tr>
+                                    <tr>
+                                        <td>06</td>
+                                        <td>채권추심법 준수 여부 (불법 추심 방지)</td>
+                                        <td>9.9K</td>
+                                        <td>12</td>
+                                    </tr>
+                                    <tr>
+                                        <td>07</td>
+                                        <td>개인정보보호법 준수 여부</td>
+                                        <td>9.5K</td>
+                                        <td>500</td>
+                                    </tr>
+                                    <tr>
+                                        <td>08</td>
+                                        <td>고객 서비스 윤리/친절도</td>
+                                        <td>9.9K</td>
+                                        <td>200</td>
+                                    </tr>
+                                    <tr>
+                                        <td>09</td>
+                                        <td>오안내/허위 사실 전달 금지</td>
+                                        <td>9.8K</td>
+                                        <td>150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>정보 고지 의무 준수 여부</td>
+                                        <td>9.5K</td>
+                                        <td>80</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11</td>
+                                        <td>스크립트/상담 매뉴얼 준수 여부</td>
+                                        <td>9.8K</td>
+                                        <td>150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12</td>
+                                        <td>정보 확인 절차 준수 여부</td>
+                                        <td>9.9K</td>
+                                        <td>80</td>
+                                    </tr>
+                                    <tr>
+                                        <td>13</td>
+                                        <td>업무 처리 절차 준수 여부</td>
+                                        <td>9.7K</td>
+                                        <td>220</td>
+                                    </tr>
+                                    <tr>
+                                        <td>14</td>
+                                        <td>상담 종료 절차 준수 여부</td>
+                                        <td>9.8K</td>
+                                        <td>110</td>
+                                    </tr>
+                                    <tr>
+                                        <td>15</td>
+                                        <td>시스템 입력/기록 정확성</td>
+                                        <td>9.6K</td>
+                                        <td>350</td>
+                                    </tr>
+                                    <tr>
+                                        <td>16</td>
+                                        <td>채권추심법 준수 여부 (불법 추심 방지)</td>
+                                        <td>9.9K</td>
+                                        <td>12</td>
+                                    </tr>
+                                    <tr>
+                                        <td>17</td>
+                                        <td>개인정보보호법 준수 여부</td>
+                                        <td>9.5K</td>
+                                        <td>500</td>
+                                    </tr>
+                                    <tr>
+                                        <td>18</td>
+                                        <td>고객 서비스 윤리/친절도</td>
+                                        <td>9.9K</td>
+                                        <td>200</td>
+                                    </tr>
+                                    <tr>
+                                        <td>19</td>
+                                        <td>오안내/허위 사실 전달 금지</td>
+                                        <td>9.8K</td>
+                                        <td>150</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20</td>
+                                        <td>정보 고지 의무 준수 여부</td>
+                                        <td>9.5K</td>
+                                        <td>80</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stt_body_con_ver_li">
+                <div class="stt_body_con_ver_li_card">
+                    <div class="stt_body_con_ver_li_card_title">
+                        <h6 class="stt_body_con_ver_li_card_title_text">
+                            일별 카테고리별 상담 건수
+                        </h6>
+                    </div>
+                    <div class="stt_body_con_ver_li_card_info">
+                        <div class="dh_chart_03">
+                            <canvas id="stackedBarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+
+
+
+
+
+
+
+    <!-- 외부 라이브러리 및 스크립트 -->
+    <!-- Tippy.js --> <!-- Popper.js -->
+    <script src="/assets/js/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/select2.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/tippy-bundle.umd.min.js"></script>
+    <script src="/assets/js/datatables.min.js"></script>
+    <!-- <script type="text/javascript" src="/assets/js/dataTables.rowGroup.min.js"></script> -->
+    <script src="/assets/js/swiper-bundle.min.js"></script>
+    <script src="/assets/js/gsap.min.js"></script>
+    <script src="/assets/js/Draggable.min.js"></script>
+    <script src="/assets/js/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+
+
+
+
+    <!-- Style Script -->
+    <script src="/assets/js/js_style.js"></script>
+
+
+
+
+
+    <script>
+        // Chart.js를 사용하여 도넛 차트 생성 
+        const doughnutData = {
+    labels: ['정상', '규정 미준수', '확인 필요'],
+    datasets: [{
+      data: [30, 40, 30],
+      backgroundColor: ['#4DC0C0', '#FFD700', '#FF6384'],
+      hoverOffset: 4
+    }]
+  };
+
+  const doughnutConfig = {
+    type: 'doughnut',
+    data: doughnutData,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'right',
+          align: 'center',
+          labels: {
+            font: {
+              size: 14
+            },
+            boxWidth: 20,
+            boxHeight: 30,
+            usePointStyle: true,
+            pointStyle: 'rectRounded'
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              let label = context.label || '';
+              if (label) label += ': ';
+              if (context.parsed !== null) label += context.parsed + '%';
+              return label;
+            }
+          }
+        },
+        datalabels: false // 도넛 차트는 datalabels 사용 안 함
+      }
+    }
+  };
+
+  new Chart(document.getElementById('myDoughnutChart'), doughnutConfig);
+
+
+
+
+
+  
+  
+
+
+
+  const stackedLabels = Array.from({ length: 16 }, () => '2025-05-01');
+
+  const stackedData = {
+    labels: stackedLabels,
+    datasets: [
+      {
+        label: '기타',
+        backgroundColor: '#F38181',
+        data: stackedLabels.map(() => Math.floor(Math.random() * 100 + 50)),
+        maxBarThickness: 36
+      },
+      {
+        label: '단순 안내/정보 제공',
+        backgroundColor: '#FBC687',
+        data: stackedLabels.map(() => Math.floor(Math.random() * 60 + 40)),
+        maxBarThickness: 36
+      },
+      {
+        label: '민원 접수',
+        backgroundColor: '#F5A623',
+        data: stackedLabels.map(() => Math.floor(Math.random() * 120 + 50)),
+        maxBarThickness: 36
+      },
+      {
+        label: '신용 정보 조회/정정 요청',
+        backgroundColor: '#BFA2F7',
+        data: stackedLabels.map(() => Math.floor(Math.random() * 300 + 200)),
+        maxBarThickness: 36
+      },
+      {
+        label: '채무 조정/컨설팅 상담',
+        backgroundColor: '#60C5F1',
+        data: stackedLabels.map(() => Math.floor(Math.random() * 90 + 30)),
+        maxBarThickness: 36
+      },
+      {
+        label: '채무 상환 문의/독려',
+        backgroundColor: '#28A6A6',
+        data: stackedLabels.map(() => Math.floor(Math.random() * 90 + 30)),
+        maxBarThickness: 36
+      }
+    ]
+  };
+
+  const stackedConfig = {
+    type: 'bar',
+    data: stackedData,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        tooltip: {
+          mode: 'index',
+          intersect: false
+        },
+        legend: {
+          position: 'right',
+          labels: {
+            usePointStyle: true,
+            boxWidth: 12,
+            font: {
+              size: 12
+            }
+          }
+        }
+      },
+      layout: {
+        padding: 20
+      },
+      scales: {
+        x: {
+          stacked: true,
+          ticks: {
+            font: { size: 11 },
+            color: '#333'
+          },
+          grid: {
+            display: false
+          }
+        },
+        y: {
+          stacked: true,
+          beginAtZero: true,
+          ticks: {
+            font: { size: 12 },
+            color: '#333'
+          },
+          grid: {
+            color: '#eee'
+          }
+        }
+      }
+    }
+  };
+
+  const stackedCtx = document.getElementById('stackedBarChart').getContext('2d');
+  new Chart(stackedCtx, stackedConfig);
+
+
+
+
+
+
+
+
+
+
+
+  // 카테고리별 건수 글자 위치 설정
+  function checkBarOverflow() {
+    const results = document.querySelectorAll('.dh_chart_02_item_chart_bar_number');
+
+    results.forEach(result => {
+      const bar = result.closest('.dh_chart_02_item_chart_bar');
+      if (!bar) return;
+
+      const resultWidth = result.offsetWidth;
+      const barWidth = bar.offsetWidth;
+
+      if (resultWidth > barWidth) {
+        result.classList.add('move_to');
+      } else {
+        result.classList.remove('move_to');
+      }
+    });
+  }
+
+  // 초기에 한 번 실행
+  checkBarOverflow();
+
+  // 창 리사이즈마다 체크
+  window.addEventListener('resize', checkBarOverflow);
+
+  // DOM 변경이나 레이아웃 변화 지속 감시 (옵션)
+  const resizeObserver = new ResizeObserver(checkBarOverflow);
+  document.querySelectorAll('.dh_chart_02_item_chart_bar').forEach(el => {
+    resizeObserver.observe(el);
+  });
+
+
+
+
+
+  
+
+
+
+        
+    </script>
+
+
+
+
+
+</body>
+
+
+
+
+
+</html>

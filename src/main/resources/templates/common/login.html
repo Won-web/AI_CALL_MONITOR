@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+
+
+
+
+<head>
+    <!-- 필수 Meta 태그 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- IE 호환성 설정 -->
+    
+    <!-- SEO 및 Social Meta -->
+    <title>RUN - Login</title>
+
+    <!-- 기본 메타 정보 START -->
+        <meta name="title" content="AI 학습 리포트 – 개인 맞춤 수업 요약과 퀴즈 결과 분석"> <!-- 페이지 제목 -->
+        <meta name="keywords" content="AI 학습 리포트, 수업 요약, 학습 결과 분석, 맞춤형 교육, AI 퀴즈, 이해도 평가, 학습 경로 추천, 교육 피드백, 온라인 교육 플랫폼, 인공지능 튜터, 교육 분석 시스템, AI 교육 리포트"> <!-- 페이지와 관련된 키워드 목록 -->
+        <meta name="description" content="AI가 수업 내용을 분석하여 자동 생성한 학습 리포트입니다. 퀴즈 결과, 이해도 분석, 보충 자료 추천까지 개인별 맞춤 정보를 제공합니다."> <!-- 페이지 설명 -->
+        <meta name="author" content="SKYAND"> <!-- 페이지 작성자의 이름 -->
+		<!-- Open Graph (OG) 메타 태그 -->
+		<meta property="og:type" content="website"> <!-- 콘텐츠 유형을 정의 (예: website, article, video 등) -->
+        <meta property="og:title" content="AI 학습 리포트 – 수업 요약과 맞춤형 학습 피드백"> <!-- 제목 -->
+        <meta property="og:description" content="수업 내용을 AI가 분석해 요약하고 퀴즈 결과 기반으로 이해도 평가 및 다음 학습 경로까지 제안합니다. 지금 내 학습 상태를 확인해보세요."> <!-- 설명 -->
+        <meta property="og:image" content="./assets/img/cover_img_1200x630.png"> <!-- 대표 이미지 (1200x630 권장) -->
+        <!-- <meta property="og:url" content="https://yourdomain.com/learning-report"> --> <!-- 공유될 실제 페이지 URL -->
+        <meta property="og:locale" content="ko_KR"> <!-- 언어 설정 -->
+		<!-- Twitter 메타 태그 -->
+		<meta property="twitter:card" content="./assets/img/cover_img_1200x630.png"> <!-- 큰 이미지가 포함된 카드 -->
+        <meta property="twitter:title" content="AI 학습 리포트 – 수업 요약과 맞춤형 학습 피드백"> <!-- 트위터 제목 -->
+        <meta property="twitter:description" content="수업 내용을 AI가 분석해 요약하고 퀴즈 결과 기반으로 이해도 평가 및 다음 학습 경로까지 제안합니다. 지금 내 학습 상태를 확인해보세요."> <!-- 트위터 설명 -->
+        <!-- <meta property="twitter:url" content="https://yourdomain.com/learning-report"> --> <!-- 페이지 URL -->
+		<meta property="twitter:image" content="./assets/img/cover_img_1200x630.png"> <!-- 트위터 카드에 표시될 이미지 URL -->
+    <!-- 기본 메타 정보 END -->
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon_32x32.png"> <!-- 브라우저 탭에 표시되는 작은 아이콘 (favicon) 설정 --> <!-- type="image/png": 아이콘의 파일 형식을 지정 --> <!-- sizes="32x32": 아이콘의 크기를 지정 (일반적인 브라우저용) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/apple_touch_icon_180x180.png"> <!-- Apple 디바이스(iPhone, iPad 등) 홈 화면에 추가될 때 사용할 아이콘 --> <!-- sizes="180x180": 아이콘의 크기를 지정 (애플 권장 크기) -->
+
+    <!-- 외부 라이브러리 및 스타일시트 -->
+    <link rel="stylesheet" type="text/css" href="./assets/css/select2.min.css"/>
+    <link rel="stylesheet" type="text/css" href="./assets/css/tippy.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/datatables.min.css"/>
+    <!-- <link rel="stylesheet" type="text/css" href="./assets/css/rowGroup.dataTables.min.css"/> -->
+    
+
+    <!-- 사용자 정의 스타일 -->
+    <link rel="stylesheet" href="./assets/css/style.css?v=1.0">
+
+</head>
+
+
+
+
+
+<body>
+
+
+
+
+
+    <main class="r_login">
+        <section class="r_login_con">
+            <div class="r_login_con_wrapper">
+                <div class="r_login_con_space"></div>
+                <div class="r_login_con_logo">
+                    <div class="r_login_con_logo_dot">
+                        <div class="r_login_con_logo_dot_li">
+                            <img src="./assets/img/3d_logo_dot_01.png" alt="RUN 로고 상단 점 부분">
+                        </div>
+                        <div class="r_login_con_logo_dot_li">
+                            <img src="./assets/img/3d_logo_dot_02.png" alt="RUN 로고 상단 점 부분">
+                        </div>
+                        <div class="r_login_con_logo_dot_li">
+                            <img src="./assets/img/3d_logo_dot_03.png" alt="RUN 로고 상단 점 부분">
+                        </div>
+                    </div>
+                    <div class="r_login_con_logo_text">
+                        <div class="r_login_con_logo_text_li">
+                            <img src="./assets/img/3d_logo_text_01.png" alt="로고 R">
+                        </div>
+                        <div class="r_login_con_logo_text_li">
+                            <img src="./assets/img/3d_logo_text_02.png" alt="로고 U">
+                        </div>
+                        <div class="r_login_con_logo_text_li">
+                            <img src="./assets/img/3d_logo_text_03.png" alt="로고 N">
+                        </div>
+                    </div>
+                </div>
+                <h3 class="r_login_con_title">
+                    돌아오셨네요!
+                </h3>
+                <h6 class="r_login_con_message">
+                    지난 학습을 이어가고, AI 튜터와 함께 성장하세요.
+                </h6>
+                <div class="r_login_con_idpw">
+                    <div class="r_login_con_idpw_info">
+                        <div class="r_login_con_idpw_info_icon"></div>
+                        <h6 class="r_login_con_idpw_text">
+                            Email
+                        </h6>
+                    </div>
+                    <div class="bs_input_clear">
+                        <input type="text" placeholder="이메일을 입력해주세요.">
+                    </div>
+                </div>
+                <div class="r_login_con_idpw">
+                    <div class="r_login_con_idpw_info">
+                        <div class="r_login_con_idpw_info_icon pw_ver"></div>
+                        <h6 class="r_login_con_idpw_text">
+                            Password
+                        </h6>
+                    </div>
+                    <div class="bs_input_clear">
+                        <input type="text" placeholder="비밀번호를 입력해주세요.">
+                    </div>
+                </div>
+                <div class="r_login_con_option">
+                    <div class="r_login_con_option_remember">
+                        <input type="checkbox" class="r_login_con_option_remember_check">
+                        <p class="r_login_con_option_remember_text">
+                            ID 기억하기
+                        </p>
+                    </div>
+                    <a class="r_login_con_option_findpw" href="#">
+                        비밀번호 찾기
+                    </a>
+                </div>
+                <button class="bs_bt gradient_ver01">
+                    로그인
+                </button>
+                <div class="r_login_con_or">
+                    <div class="r_login_con_or_line"></div>
+                    <p class="r_login_con_or_text">or</p>
+                    <div class="r_login_con_or_line"></div>
+                </div>
+                <button class="bs_bt white_ver google">
+                    <div class="bs_bt_icon"></div>
+                    구글 로그인
+                </button>
+                <button class="bs_bt kakao">
+                    <div class="bs_bt_icon"></div>
+                    카카오오 로그인
+                </button>
+                <p class="r_login_con_signup">
+                    아직 계정이 없으신가요? <a href="#">회원가입하기</a>
+                </p>
+                <div class="r_login_con_space"></div>
+            </div>
+        </section>
+        <section class="r_login_banner">
+            <div class="r_login_banner_inner"></div>
+        </section>
+    </main>
+
+
+
+
+
+    <!-- 외부 라이브러리 및 스크립트 -->
+    <!-- Tippy.js --> <!-- Popper.js -->
+    <script src="./assets/js/jquery-3.7.1.min.js"></script>
+    <script src="./assets/js/select2.min.js"></script>
+    <script src="./assets/js/popper.min.js"></script>
+    <script src="./assets/js/tippy-bundle.umd.min.js"></script>
+    <script src="./assets/js/datatables.min.js"></script>
+    <!-- <script type="text/javascript" src="./assets/js/dataTables.rowGroup.min.js"></script> -->
+
+
+
+
+
+    <!-- Style Script -->
+    <script src="./assets/js/js_style.js"></script>
+
+
+
+
+</body>
+
+
+
+
+
+</html>
