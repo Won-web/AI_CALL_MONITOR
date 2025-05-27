@@ -19,7 +19,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    	System.out.println("[Interceptor] 요청 URI: " + request.getRequestURI());
+    	//System.out.println("[Interceptor] 요청 URI: " + request.getRequestURI());
         HttpSession session = request.getSession(false);
         if (session == null) {
             response.sendRedirect("/login");

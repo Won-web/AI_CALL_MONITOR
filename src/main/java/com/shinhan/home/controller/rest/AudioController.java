@@ -67,11 +67,12 @@ public class AudioController {
 
         // JSON에서 audioIdx 추출
         String audioIdxStr = String.valueOf(input.get("audioIdx"));
+        String diarizationStr = String.valueOf(input.get("diarization"));
         RunAudioInfoTbDTO eDTO = runAudioInfoService.getRunAudioInfo(audioIdxStr);
         
         if(null != eDTO.getAudioUrl()) {
         	String audioUrl = eDTO.getAudioEncodedName() + eDTO.getAudioExt();
-        	Map<String, Object> resultMap = sendToAiForAnalysis(audioUrl);
+        	Map<String, Object> resultMap = sendToAiForAnalysis(audioUrl, diarizationStr);
         	if(null == resultMap) {
         		result.put("segments", null);
         		result.put("status", "failed");
@@ -91,7 +92,14 @@ public class AudioController {
         return result;
     }
     
-    public Map<String, Object> sendToAiForAnalysis(String audioUrl) {
+//    @PostMapping("/llmCorrect")
+//    @ResponseBody
+//    public Map<String, Object> analyzeAudio() {
+//    	
+//    }
+    
+    
+    public Map<String, Object> sendToAiForAnalysis(String audioUrl, String diarization) {
     	RestTemplate restTemplate = new RestTemplate();
         
         String serverIp = getLocalServerIp(); 
@@ -103,8 +111,13 @@ public class AudioController {
         // 인코딩은 GET 요청할 경우에만 필요
         //String encodedUrl = URLEncoder.encode(audioUrl, StandardCharsets.UTF_8);
         // GET 요청을 보낼 경우 예:
-        String aiUrl = aiServerUrl + "/analyzeAudio?audio_url=" + audioUrl;
-
+        String diarizationUrl = "";
+        if(diarization.equals("N")) {
+        	diarizationUrl = "/analyzeAudioNoSpeaker?audio_url=";
+        } else {
+        	diarizationUrl = "/analyzeAudio?audio_url=";
+        }
+        String aiUrl = aiServerUrl + diarizationUrl + audioUrl;
         try {
             ResponseEntity<Map> response = restTemplate.getForEntity(aiUrl, Map.class);
             Map<String, Object> responseBody = response.getBody();

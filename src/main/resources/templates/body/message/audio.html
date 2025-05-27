@@ -31,6 +31,9 @@
 	
 </head>
 <script>
+
+let lastAnalyzedSegments = null;
+
 document.addEventListener("DOMContentLoaded", function () {
     initAudioSelectAndAnalyze();
     initAudioUpload();
@@ -85,6 +88,45 @@ function initAudioSelectAndAnalyze() {
             audioPlayer.controls = true;
             audioPlayer.style.marginLeft = "20px";
             audioPlayer.style.maxWidth = "400px";
+			
+            // 라디오 버튼 추가
+            const radioWrapper = document.createElement("div");
+            radioWrapper.style.display = "flex";
+            radioWrapper.style.alignItems = "center";
+            radioWrapper.style.gap = "10px";
+            radioWrapper.style.marginLeft = "20px";
+
+            const radioLabel = document.createElement("span");
+            radioLabel.innerText = "화자 분리:";
+            radioLabel.style.fontSize = "14px";
+
+            const radioYes = document.createElement("input");
+            radioYes.type = "radio";
+            radioYes.name = "diarization";
+            radioYes.value = "true";
+            radioYes.id = "diarize_yes";
+            radioYes.checked = true;
+
+            const labelYes = document.createElement("label");
+            labelYes.innerText = "예";
+            labelYes.setAttribute("for", "diarize_yes");
+
+            const radioNo = document.createElement("input");
+            radioNo.type = "radio";
+            radioNo.name = "diarization";
+            radioNo.value = "false";
+            radioNo.id = "diarize_no";
+            radioNo.checked = true;
+
+            const labelNo = document.createElement("label");
+            labelNo.innerText = "아니오";
+            labelNo.setAttribute("for", "diarize_no");
+
+            radioWrapper.appendChild(radioLabel);
+            radioWrapper.appendChild(radioYes);
+            radioWrapper.appendChild(labelYes);
+            radioWrapper.appendChild(radioNo);
+            radioWrapper.appendChild(labelNo);
             
             // 셀렉트박스 변경 시 자동 재생
             select.addEventListener("change", function () {
@@ -125,7 +167,9 @@ function initAudioSelectAndAnalyze() {
                         </div>
                     </div>
                 `;
-
+				
+                const diarization = document.querySelector('input[name="diarization"]:checked')?.value === "true" ? "Y" : "N";
+                
                 fetch("/api/audio/analyzeAudio", {
                     method: "POST",
                     headers: {
@@ -133,11 +177,12 @@ function initAudioSelectAndAnalyze() {
                         [document.querySelector('meta[name="_csrf_header"]').getAttribute("content")]:
                             document.querySelector('meta[name="_csrf"]').getAttribute("content")
                     },
-                    body: JSON.stringify({ audioIdx: selectedAudioIdx })
+                    body: JSON.stringify({ audioIdx: selectedAudioIdx, diarization: diarization })
                 })
                 .then(res => res.json())
                 .then(data => {
                     console.log("AI 분석 결과:", data);
+                    lastAnalyzedSegments = data.segments;
                     renderSegmentsToChat(data.segments);
                 })
                 .catch(err => {
@@ -152,9 +197,10 @@ function initAudioSelectAndAnalyze() {
                     if (uploadButton) uploadButton.disabled = false;
                 });
             });
-
+            
             wrapper.appendChild(select);
             wrapper.appendChild(audioPlayer);
+            wrapper.appendChild(radioWrapper); 
             wrapper.appendChild(button);
             container.appendChild(wrapper);
         });
