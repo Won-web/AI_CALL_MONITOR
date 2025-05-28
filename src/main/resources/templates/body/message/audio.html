@@ -156,6 +156,9 @@ function initAudioSelectAndAnalyze() {
 	            // 업로드 버튼도 비활성화
                 const uploadButton = document.getElementById("uploadAudioBtn");
                 if (uploadButton) uploadButton.disabled = true;
+                const llmButton = document.getElementById("sendToLLM");
+                if (llmButton) llmButton.disabled = true;
+                
                 const chatBox = document.querySelector(".r_body_classroom_chat_box_talk");
                 chatBox.innerHTML = `
                     <div class="ai_bot loading">
@@ -196,6 +199,8 @@ function initAudioSelectAndAnalyze() {
                     button.innerText = "AI 분석 요청";
                     const uploadButton = document.getElementById("uploadAudioBtn");
                     if (uploadButton) uploadButton.disabled = false;
+                    const llmButton = document.getElementById("sendToLLM");
+                    if (llmButton) llmButton.disabled = false;
                 });
             });
             
@@ -276,32 +281,102 @@ function renderSegmentsToChat(segments) {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
+function renderSegmentsToChatLLM(segments) {
+    const chatBox = document.querySelector(".r_body_classroom_chat_box_talk");
+    chatBox.innerHTML = ""; // 기존 내용 비우기
+
+    if (!Array.isArray(segments) || segments.length === 0) {
+        chatBox.innerHTML = "<p>분석된 대화가 없습니다.</p>";
+        return;
+    }
+
+    segments.forEach(segment => {
+        const { timestamp, speaker, contents, corrected_contents } = segment;
+		
+        console.log(segment);
+        const aiHtml = `
+            <div class="ai_bot">
+                <div class="profile"></div>
+                <div class="talk_group">
+                    <p class="talk_name">${speaker} (${timestamp})</p>
+                    <div class="talk_box">
+                        <p class="talk_box_text">${corrected_contents}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        chatBox.insertAdjacentHTML("beforeend", aiHtml);
+    });
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
 function sendSegmentsToLLM() {
     if (!lastAnalyzedSegments || lastAnalyzedSegments.length === 0) {
         alert("먼저 AI 분석을 실행해주세요.");
         return;
     }
 
+    // 버튼 요소들
+    const llmButton = document.getElementById("sendToLLM");
+    const uploadButton = document.getElementById("uploadAudioBtn");
+    const goAnalyzeButton = document.getElementById("goAnalyze");
+
+    // 버튼 비활성화 및 텍스트 변경
+    if (llmButton) {
+        llmButton.disabled = true;
+        llmButton.innerText = "LLM 분석 중...";
+    }
+    if (uploadButton) uploadButton.disabled = true;
+    if (goAnalyzeButton) goAnalyzeButton.disabled = true;
+
+    // CSRF 토큰
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]')?.getAttribute("content");
+    const csrfToken = document.querySelector('meta[name="_csrf"]')?.getAttribute("content");
+
+    const headers = {
+        "Content-Type": "application/json"
+    };
+    if (csrfHeader && csrfToken) {
+        headers[csrfHeader] = csrfToken;
+    }
+
+    // speaker가 없으면 '미지정'으로 설정
+    const normalizedSegments = lastAnalyzedSegments.map(seg => ({
+        timestamp: seg.timestamp,
+        contents: seg.contents,
+        speaker: seg.speaker ?? "미지정"  // <- 수정된 부분
+    }));
+
+    // 요청 전송
     fetch("/api/audio/llmCorrect", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            [document.querySelector('meta[name="_csrf_header"]').getAttribute("content")]:
-                document.querySelector('meta[name="_csrf"]').getAttribute("content")
-        },
-        body: JSON.stringify({ segments: lastAnalyzedSegments })
+        headers: headers,
+        body: JSON.stringify({ segments: normalizedSegments })
     })
     .then(res => res.json())
     .then(data => {
-        console.log("LLM 응답 결과:", data);
-        alert("LLM 분석이 완료되었습니다.");
-        // 여기에 결과 렌더링 추가 가능
+        alert(data.message || "LLM 분석 결과를 수신했습니다.");
+        if (data.segments && Array.isArray(data.segments)) {
+            renderSegmentsToChatLLM(data.segments);
+        }
     })
     .catch(err => {
         console.error("LLM 분석 요청 실패", err);
         alert("LLM 분석 중 오류가 발생했습니다.");
+    })
+    .finally(() => {
+        // 버튼 복원
+        if (llmButton) {
+            llmButton.disabled = false;
+            llmButton.innerText = "LLM 분석 요청";
+        }
+        if (uploadButton) uploadButton.disabled = false;
+        if (goAnalyzeButton) goAnalyzeButton.disabled = false;
     });
 }
+
+
 </script>
 <body>
     <main class="r_main sample_analysis" style="height: 100dvh;">
@@ -353,9 +428,11 @@ function sendSegmentsToLLM() {
                                 AI 분석
                             </h5>
                             <p>AI Analysis</p>
-                            <button id="sendToLLM" class="bs_bt gradient_ver01 small_ver" style="">
-							    LLM 분석 요청
-							</button>
+                            <div id="llm-button-wrapper">
+	                            <button id="sendToLLM" class="bs_bt small_ver">
+								    LLM 분석 요청
+								</button>
+							</div>
                         </div>
                         <div class="r_body_classroom_chat_box_talk">
                             

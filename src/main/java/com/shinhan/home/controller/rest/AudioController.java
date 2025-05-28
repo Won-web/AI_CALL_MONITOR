@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.net.URI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 import com.shinhan.home.model.dto.RunAudioInfoTbDTO;
 
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,6 +30,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import com.shinhan.home.model.service.RunAudioInfoService;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 @RestController
 @RequiredArgsConstructor
@@ -97,12 +103,51 @@ public class AudioController {
     public Map<String, Object> llmCorrect(@RequestBody Map<String, Object> input) {
         Map<String, Object> result = new HashMap<>();
 
-        Object segments = input.get("segments");
-        System.out.println("받은 segments: ");
-        System.out.println(segments);
+        // segments 리스트 추출
+        List<Map<String, Object>> segments = (List<Map<String, Object>>) input.get("segments");
 
-        result.put("status", "success");
-        result.put("message", "segments 수신 완료");
+        if (segments == null || segments.isEmpty()) {
+            result.put("status", "failed");
+            result.put("message", "segments가 비어있습니다.");
+            result.put("segments", null);
+            return result;
+        }
+
+        // AI 서버로 요청 보낼 URL
+        String aiUrl = aiServerUrl + "/llmCorrect";
+        try {
+            // 헤더 설정
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            // RequestEntity 생성
+            Map<String, Object> requestBody = new HashMap<>();
+            requestBody.put("segments", segments);
+            HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+            
+            URI uri = UriComponentsBuilder.fromHttpUrl(aiUrl).build().toUri();
+            System.out.println("빌드된URI : "+uri);
+            // POST 요청 전송
+            ResponseEntity<Map> response = restTemplate.postForEntity(uri, requestEntity, Map.class);
+
+            Map<String, Object> aiResponse = response.getBody();
+
+            if (aiResponse != null && aiResponse.get("segments") != null) {
+                result.put("status", "success");
+                result.put("message", "LLM 분석 완료");
+                result.put("segments", aiResponse.get("segments"));
+            } else {
+                result.put("status", "failed");
+                result.put("message", "AI 서버에서 분석한 내용이 없음");
+                result.put("segments", null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("status", "error");
+            result.put("message", "AI 서버 요청 중 오류 발생");
+            result.put("segments", null);
+        }
+
         return result;
     }
     

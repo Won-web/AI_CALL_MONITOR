@@ -2733,6 +2733,16 @@ td:nth-child(2) {
      background-color: var(--color_bg_gray);
      animation: ease-in-out ani_loading_bg 2.5s infinite;
  }
+ 
+ .r_body_classroom_chat_box > .sample_analysis_title {
+    align-items: center;
+    min-height: 60px;
+}
+ 
+ #llm-button-wrapper {
+    margin-left: auto;  /* llm분석 버튼 오른쪽으로 보냄 */
+}
+
  @keyframes ani_loading_bg {
      0% {
          background-color: var(--color_bg_gray);
