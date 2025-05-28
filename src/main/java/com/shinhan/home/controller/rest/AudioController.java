@@ -126,7 +126,6 @@ public class AudioController {
             HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
             
             URI uri = UriComponentsBuilder.fromHttpUrl(aiUrl).build().toUri();
-            System.out.println("빌드된URI : "+uri);
             // POST 요청 전송
             ResponseEntity<Map> response = restTemplate.postForEntity(uri, requestEntity, Map.class);
 
