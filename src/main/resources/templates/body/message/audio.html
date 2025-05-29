@@ -137,7 +137,7 @@ function initAudioSelectAndAnalyze() {
                 if (selected && selected.audioEncodedName && selected.audioExt) {
                     const audioUrl = `http://13.125.101.212/uploads/audio/${selected.audioEncodedName}${selected.audioExt}`;
                     audioPlayer.src = audioUrl;
-                    audioPlayer.play().catch(console.warn);
+                    //audioPlayer.play().catch(console.warn); //자동재생기능
                 } else {
                     audioPlayer.src = "";
                 }
