@@ -54,16 +54,19 @@ file:
   upload-dir: /uploads
 
 ssh:
-  host: 13.125.101.212
+  # host: 13.125.101.212
+  host: 52.69.3.104
   port: 22
   username: ec2-user
-  pem-path: /uploads/skyand_ai_key.pem
+  # pem-path: /uploads/skyand_ai_key.pem
+  pem-path: /uploads/skyand_ai_key_tokyo.pem
   key-passphrase: "!skyand2024"
   remote-dir: /home/ec2-user/python-sinhan
 
 ai:
   server:
-    url: http://13.125.101.212:8200
+    # url: http://13.125.101.212:8200
+    url: http://52.69.3.104:8200
     
 server:
   port: 18082
