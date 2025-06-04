@@ -58,7 +58,7 @@ ssh:
   host: 52.69.3.104
   port: 22
   username: ec2-user
-  pem-path: /uploads/skyand_ai_key_tokyo.pem
+  pem-path: /uploads/skyand_ai_key_oregon.pem
   key-passphrase: "!skyand2024"
   remote-dir: /home/ec2-user/python-sinhan
 
