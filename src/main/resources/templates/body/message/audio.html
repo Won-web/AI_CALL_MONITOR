@@ -135,7 +135,7 @@ function initAudioSelectAndAnalyze() {
                 const selected = audioList.find(a => a.audioIdx == selectedIdx);
 
                 if (selected && selected.audioEncodedName && selected.audioExt) {
-                    const audioUrl = `http://13.125.101.212/uploads/audio/${selected.audioEncodedName}${selected.audioExt}`;
+                    const audioUrl = `http://52.32.143.206/uploads/audio/${selected.audioEncodedName}${selected.audioExt}`;
                     audioPlayer.src = audioUrl;
                     //audioPlayer.play().catch(console.warn); //자동재생
                 } else {
