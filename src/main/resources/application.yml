@@ -65,7 +65,7 @@ ssh:
 ai:
   server:
     # url: http://13.125.101.212:8200
-    url: http://52.69.3.104:8200
+    url: http://52.32.143.206:8200
     
 server:
   port: 18082
