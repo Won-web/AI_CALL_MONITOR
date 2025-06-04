@@ -100,15 +100,28 @@ public class UploadController {
 
 	        // 3. EC2 업로드
 	        String remoteDir = sshRemoteDir + "/audio_path";
-	        SSHUploader.upload(
-	            finalUploadFile.getAbsolutePath(),
-	            remoteDir,
-	            sshHost,
-	            sshPort,
-	            sshUsername,
-	            sshPemPath,
-	            sshKeyPassphrase
-	        );
+	        
+	        try {
+	            SSHUploader.upload(
+	                finalUploadFile.getAbsolutePath(),
+	                remoteDir,
+	                sshHost,
+	                sshPort,
+	                sshUsername,
+	                sshPemPath,
+	                sshKeyPassphrase
+	            );
+	        } finally {
+	            // 업로드 후 임시 파일 삭제
+	            if (tempPath.toFile().exists()) {
+	                tempPath.toFile().delete();
+	            }
+
+	            // mp3 → wav 변환된 경우, wav도 삭제
+	            if (!tempPath.toFile().equals(finalUploadFile) && finalUploadFile.exists()) {
+	                finalUploadFile.delete();
+	            }
+	        }
 
 	        // 4. URL 및 DTO 저장
 	        String audioUrl = remoteDir+ "/" + finalUploadFile.getName();
