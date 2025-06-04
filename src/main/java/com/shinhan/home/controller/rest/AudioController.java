@@ -50,6 +50,8 @@ public class AudioController {
     @Value("${ai.server.url}")
     private String aiServerUrl;
     
+    @Value("${ssh.host}")
+    private String sshHost;
     @GetMapping("/getAudioList")
     @ResponseBody
     @ApiResponses({
@@ -63,6 +65,7 @@ public class AudioController {
     	
     	List<RunAudioInfoTbDTO> audioList = runAudioInfoService.getAllRunAudioInfo();
     	result.put("audioList", audioList);
+    	result.put("sshHost", sshHost);
     	return result;
     }
     

@@ -46,7 +46,7 @@ function initAudioSelectAndAnalyze() {
         .then(result => {
             const audioList = result.audioList || [];
             const container = document.querySelector(".r_body_classroom_con");
-
+			const sshHost = result.sshHost;
             // 기존 자식 중 .r_audio_upload를 제외한 모든 요소 제거
             Array.from(container.children).forEach(child => {
             	if (!child.classList.contains("r_audio_upload") && !child.classList.contains("sample_analysis_title")) {
@@ -135,7 +135,7 @@ function initAudioSelectAndAnalyze() {
                 const selected = audioList.find(a => a.audioIdx == selectedIdx);
 
                 if (selected && selected.audioEncodedName && selected.audioExt) {
-                    const audioUrl = `http://52.32.143.206/uploads/audio/${selected.audioEncodedName}${selected.audioExt}`;
+                    const audioUrl = `http://${sshHost}/uploads/audio/${selected.audioEncodedName}${selected.audioExt}`;
                     audioPlayer.src = audioUrl;
                     //audioPlayer.play().catch(console.warn); //자동재생
                 } else {
@@ -164,7 +164,7 @@ function initAudioSelectAndAnalyze() {
                     <div class="ai_bot loading">
                         <div class="profile"></div>
                         <div class="talk_group">
-                            <p class="talk_name">AI 튜터</p>
+                            <p class="talk_name">AI 분석</p>
                             <div class="talk_box">
                                 <p class="talk_box_text">분석 중입니다. 잠시만 기다려주세요...</p>
                             </div>
