@@ -22,14 +22,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import com.shinhan.home.model.dto.RunAudioInfoTbDTO;
+import com.shinhan.home.model.dto.ShinhanAudioInfoTbDTO;
 
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import com.shinhan.home.model.service.RunAudioInfoService;
+import com.shinhan.home.model.service.ShinhanAudioInfoService;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -42,7 +42,7 @@ public class AudioController {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	private final RunAudioInfoService runAudioInfoService;
+	private final ShinhanAudioInfoService ShinhanAudioInfoService;
 	
 	private final RestTemplate restTemplate = new RestTemplate();
     private final RedisTemplate<String, Object> redisTemplate;
@@ -63,7 +63,7 @@ public class AudioController {
     public Map<String, Object> getAudioList() {
     	Map<String, Object> result = new HashMap<>();
     	
-    	List<RunAudioInfoTbDTO> audioList = runAudioInfoService.getAllRunAudioInfo();
+    	List<ShinhanAudioInfoTbDTO> audioList = ShinhanAudioInfoService.getAllShinhanAudioInfo();
     	result.put("audioList", audioList);
     	result.put("sshHost", sshHost);
     	return result;
@@ -77,7 +77,7 @@ public class AudioController {
         // JSON에서 audioIdx 추출
         String audioIdxStr = String.valueOf(input.get("audioIdx"));
         String diarizationStr = String.valueOf(input.get("diarization"));
-        RunAudioInfoTbDTO eDTO = runAudioInfoService.getRunAudioInfo(audioIdxStr);
+        ShinhanAudioInfoTbDTO eDTO = ShinhanAudioInfoService.getShinhanAudioInfo(audioIdxStr);
         
         if(null != eDTO.getAudioUrl()) {
         	String audioUrl = eDTO.getAudioEncodedName() + eDTO.getAudioExt();

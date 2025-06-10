@@ -15,14 +15,14 @@ import lombok.experimental.SuperBuilder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import com.shinhan.home.model.dto.querydto.RunUserTbQueryDTO;
+import com.shinhan.home.model.dto.querydto.ShinhanUserTbQueryDTO;
 
 @Entity
-@Table(name = "run_user_tb")
+@Table(name = "shinhan_user_tb")
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RunUserTbEntity extends CommonEntity {
+public class ShinhanUserTbEntity extends CommonEntity {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -102,7 +102,7 @@ public class RunUserTbEntity extends CommonEntity {
     @Column(name = "reg_type")
     private String regType;
     
-    public void updateFromQueryDto(RunUserTbQueryDTO dto) {
+    public void updateFromQueryDto(ShinhanUserTbQueryDTO dto) {
     	
     	 // 기본키 수정 방어
         if (!this.userIdx.equals(dto.getUserIdx())) {

@@ -20,11 +20,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
-import com.shinhan.home.model.dto.RunAudioInfoTbDTO;
-import com.shinhan.home.model.dto.querydto.RunAudioInfoTbQueryDTO;
-import com.shinhan.home.model.entity.RunAudioInfoTbEntity;
-import com.shinhan.home.model.repository.RunAudioInfoRepository;
-import com.shinhan.home.model.service.RunAudioInfoService;
+import com.shinhan.home.model.dto.ShinhanAudioInfoTbDTO;
+import com.shinhan.home.model.dto.querydto.ShinhanAudioInfoTbQueryDTO;
+import com.shinhan.home.model.entity.ShinhanAudioInfoTbEntity;
+import com.shinhan.home.model.repository.ShinhanAudioInfoRepository;
+import com.shinhan.home.model.service.ShinhanAudioInfoService;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -36,7 +36,7 @@ import javax.sound.sampled.AudioFileFormat;
 @RequiredArgsConstructor
 public class UploadController {
 	
-	private final RunAudioInfoService runAudioInfoService;
+	private final ShinhanAudioInfoService ShinhanAudioInfoService;
 	
 	@Value("${file.upload-dir}")
     private String uploadDir;
@@ -126,7 +126,7 @@ public class UploadController {
 	        // 4. URL 및 DTO 저장
 	        String audioUrl = remoteDir+ "/" + finalUploadFile.getName();
 
-	        RunAudioInfoTbDTO dto = RunAudioInfoTbDTO.builder()
+	        ShinhanAudioInfoTbDTO dto = ShinhanAudioInfoTbDTO.builder()
 	                .audioId(audioId)
 	                .audioExt(finalAudioExt)
 	                .audioEncodedName(audioEncodedName)
@@ -134,7 +134,7 @@ public class UploadController {
 	                .regDt(ParseUtil.formatDateTime(LocalDateTime.now()))
 	                .build();
 
-	        runAudioInfoService.addAudioInfo(dto);
+	        ShinhanAudioInfoService.addAudioInfo(dto);
 
 	        return ResponseEntity.ok("파일 업로드 및 전송 완료");
 

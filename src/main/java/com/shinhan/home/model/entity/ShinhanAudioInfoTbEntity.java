@@ -9,7 +9,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
-import com.shinhan.home.model.dto.querydto.RunAudioInfoTbQueryDTO;
+import com.shinhan.home.model.dto.querydto.ShinhanAudioInfoTbQueryDTO;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +19,12 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name = "run_audio_info_tb")
+@Table(name = "shinhan_audio_info_tb")
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RunAudioInfoTbEntity {
+public class ShinhanAudioInfoTbEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,7 +54,7 @@ public class RunAudioInfoTbEntity {
     @Column(name = "reg_dt")
     private LocalDateTime regDt;
     
-    public void updateFromQueryDto(RunAudioInfoTbQueryDTO dto) {
+    public void updateFromQueryDto(ShinhanAudioInfoTbQueryDTO dto) {
         if (!this.audioIdx.equals(dto.getAudioIdx())) {
             throw new IllegalArgumentException("PrimaryKey audioIdx는 변경할 수 없습니다.");
         }

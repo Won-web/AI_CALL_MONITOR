@@ -3,8 +3,8 @@ package com.shinhan.home.model.dto.querydto;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import com.shinhan.home.model.dto.RunAudioInfoTbDTO;
-import com.shinhan.home.model.entity.RunAudioInfoTbEntity;
+import com.shinhan.home.model.dto.ShinhanAudioInfoTbDTO;
+import com.shinhan.home.model.entity.ShinhanAudioInfoTbEntity;
 import com.shinhan.home.util.ParseUtil;
 
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
-public class RunAudioInfoTbQueryDTO {
+public class ShinhanAudioInfoTbQueryDTO {
 	
 	private Integer audioIdx;
     private String audioId;
@@ -25,7 +25,7 @@ public class RunAudioInfoTbQueryDTO {
     private LocalDateTime regDt;
 
     @QueryProjection
-    public RunAudioInfoTbQueryDTO(Integer audioIdx, String audioId, String audioEncodedName,String audioExt, String audioUrl,
+    public ShinhanAudioInfoTbQueryDTO(Integer audioIdx, String audioId, String audioEncodedName,String audioExt, String audioUrl,
                                   String audioContents, String audioSurmmary, LocalDateTime regDt) {
         this.audioIdx = audioIdx;
         this.audioId = audioId;
@@ -37,8 +37,8 @@ public class RunAudioInfoTbQueryDTO {
         this.regDt = regDt;
     }
     
-    public static RunAudioInfoTbQueryDTO fromDTO(RunAudioInfoTbDTO dto) {
-        return RunAudioInfoTbQueryDTO.builder()
+    public static ShinhanAudioInfoTbQueryDTO fromDTO(ShinhanAudioInfoTbDTO dto) {
+        return ShinhanAudioInfoTbQueryDTO.builder()
                 .audioIdx(ParseUtil.parseInt(dto.getAudioIdx()))
                 .audioId(dto.getAudioId())
                 .audioEncodedName(dto.getAudioEncodedName())
@@ -50,8 +50,8 @@ public class RunAudioInfoTbQueryDTO {
                 .build();
     }
 
-    public RunAudioInfoTbEntity toEntity() {
-        return RunAudioInfoTbEntity.builder()
+    public ShinhanAudioInfoTbEntity toEntity() {
+        return ShinhanAudioInfoTbEntity.builder()
                 .audioIdx(audioIdx)
                 .audioId(audioId)
                 .audioEncodedName(audioEncodedName)

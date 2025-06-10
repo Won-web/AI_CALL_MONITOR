@@ -10,15 +10,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import com.shinhan.home.model.dto.RunUserTbDTO;
-import com.shinhan.home.model.entity.RunUserTbEntity;
+import com.shinhan.home.model.dto.ShinhanUserTbDTO;
+import com.shinhan.home.model.entity.ShinhanUserTbEntity;
 import com.shinhan.home.util.ParseUtil;
 
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
-public class RunUserTbQueryDTO extends CommonQueryDTO{
+public class ShinhanUserTbQueryDTO extends CommonQueryDTO{
 
 	private Integer userIdx;
     private String emailId;
@@ -48,7 +48,7 @@ public class RunUserTbQueryDTO extends CommonQueryDTO{
     
     //로그인시 가져와야만 하는 칼럼 분류
     @QueryProjection
-    public RunUserTbQueryDTO(Integer userIdx, String emailId, String userPw, String userPwSalt,
+    public ShinhanUserTbQueryDTO(Integer userIdx, String emailId, String userPw, String userPwSalt,
                              String userNm, String userPhone, LocalDateTime lastPwChgDt,
                              LocalDateTime lastLoginDt, String restFl, String delYn) {
         this.userIdx = userIdx;
@@ -64,8 +64,8 @@ public class RunUserTbQueryDTO extends CommonQueryDTO{
     }
     
     //DTO데이터 전환
-    public static RunUserTbQueryDTO fromDTO(RunUserTbDTO dto) {
-        RunUserTbQueryDTO queryDTO = new RunUserTbQueryDTO();
+    public static ShinhanUserTbQueryDTO fromDTO(ShinhanUserTbDTO dto) {
+    	ShinhanUserTbQueryDTO queryDTO = new ShinhanUserTbQueryDTO();
 
         queryDTO.setUserIdx(ParseUtil.parseInt(dto.getUserIdx()));
         queryDTO.setEmailId(dto.getEmailId());
@@ -102,8 +102,8 @@ public class RunUserTbQueryDTO extends CommonQueryDTO{
     }
     
     //Entity에 데이터 삽입
-    public RunUserTbEntity toEntity() {
-        return RunUserTbEntity.builder()
+    public ShinhanUserTbEntity toEntity() {
+        return ShinhanUserTbEntity.builder()
             .userIdx(this.userIdx)
             .emailId(this.emailId)
             .userNm(this.userNm)

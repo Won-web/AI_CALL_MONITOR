@@ -1,6 +1,6 @@
 package com.shinhan.home.model.dto;
 
-import com.shinhan.home.model.dto.querydto.RunAudioInfoTbQueryDTO;
+import com.shinhan.home.model.dto.querydto.ShinhanAudioInfoTbQueryDTO;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import com.shinhan.home.util.ParseUtil;
 @SuperBuilder
 @NoArgsConstructor
 @ToString
-public class RunAudioInfoTbDTO {
+public class ShinhanAudioInfoTbDTO {
 	
 	private String audioIdx;
     private String audioId;
@@ -25,8 +25,8 @@ public class RunAudioInfoTbDTO {
     private String audioSurmmary;
     private String regDt;
     
-    public static RunAudioInfoTbDTO fromQueryDTO(RunAudioInfoTbQueryDTO queryDTO) {
-        return RunAudioInfoTbDTO.builder()
+    public static ShinhanAudioInfoTbDTO fromQueryDTO(ShinhanAudioInfoTbQueryDTO queryDTO) {
+        return ShinhanAudioInfoTbDTO.builder()
                 .audioIdx(queryDTO.getAudioIdx() != null ? String.valueOf(queryDTO.getAudioIdx()) : null)
                 .audioId(queryDTO.getAudioId())
                 .audioEncodedName(queryDTO.getAudioEncodedName())

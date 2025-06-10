@@ -2,7 +2,7 @@ spring:
   application:
     name: skyand_ai_lms_user
   datasource:
-    url: jdbc:mariadb://192.168.45.201:3306/skyand_ai_lms?characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mariadb://192.168.45.201:3306/shinhan_stt?characterEncoding=UTF-8&serverTimezone=UTC
     username: skyand
     password: "!skyand2022"
     driver-class-name: org.mariadb.jdbc.Driver

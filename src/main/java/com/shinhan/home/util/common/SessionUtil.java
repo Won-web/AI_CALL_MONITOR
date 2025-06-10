@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import com.shinhan.home.model.dto.RunUserTbDTO;
+import com.shinhan.home.model.dto.ShinhanUserTbDTO;
 
 @Component
 public class SessionUtil {
@@ -19,7 +19,7 @@ public class SessionUtil {
     }
 
     public boolean getSessionIdCheck(String userIdx, String sessionId) {
-        RunUserTbDTO userInfo = (RunUserTbDTO) redisTemplate.opsForValue().get("RUN-" + userIdx);
+    	ShinhanUserTbDTO userInfo = (ShinhanUserTbDTO) redisTemplate.opsForValue().get("RUN-" + userIdx);
         if(userInfo != null) {
 			// 회원 정보가 있으면 세션 아이디 비교 후 다르면 중복 아이디(ture)
 			if(!userInfo.getSessionId().equals(sessionId)) {
@@ -34,7 +34,7 @@ public class SessionUtil {
     }
 
     public boolean delUserInfo(String userIdx, String sessionId) {
-        RunUserTbDTO userInfo = (RunUserTbDTO) redisTemplate.opsForValue().get("RUN-" + userIdx);
+    	ShinhanUserTbDTO userInfo = (ShinhanUserTbDTO) redisTemplate.opsForValue().get("RUN-" + userIdx);
         if(userInfo != null) {
 			if(userInfo.getSessionId().equals(sessionId)) {
 				redisTemplate.delete(userIdx);
@@ -44,19 +44,19 @@ public class SessionUtil {
 		return false;
     }
 
-    public void setUserInfo(HttpSession session, RunUserTbDTO input) {
+    public void setUserInfo(HttpSession session, ShinhanUserTbDTO input) {
     	session.setAttribute("userIdx", input.getUserIdx());
         session.setAttribute("name", input.getUserNm());
 
-        RunUserTbDTO redisUser = new RunUserTbDTO();
+        ShinhanUserTbDTO redisUser = new ShinhanUserTbDTO();
         redisUser.setUserIdx(input.getUserIdx());
         redisUser.setSessionId(session.getId());
 
         redisTemplate.opsForValue().set("RUN-" + input.getUserIdx(), input, 120, TimeUnit.MINUTES);
     }
 
-    public RunUserTbDTO getUserInfo(String userIdx) {
-        return (RunUserTbDTO) redisTemplate.opsForValue().get("RUN-" + userIdx);
+    public ShinhanUserTbDTO getUserInfo(String userIdx) {
+        return (ShinhanUserTbDTO) redisTemplate.opsForValue().get("RUN-" + userIdx);
     }
 
     public String getSessionId(HttpSession session) {

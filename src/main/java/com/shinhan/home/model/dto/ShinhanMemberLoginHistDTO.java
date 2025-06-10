@@ -1,6 +1,6 @@
 package com.shinhan.home.model.dto;
 
-import com.shinhan.home.model.dto.querydto.RunMemberLoginHistQueryDTO;
+import com.shinhan.home.model.dto.querydto.ShinhanMemberLoginHistQueryDTO;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ import com.shinhan.home.util.ParseUtil;
 @SuperBuilder
 @NoArgsConstructor
 @ToString
-public class RunMemberLoginHistDTO extends CommonDTO {
+public class ShinhanMemberLoginHistDTO extends CommonDTO {
 
     private String loginIdx;        // 로그인 이력 고유번호 (INT)
     private String emailId;         // 이메일 ID
@@ -30,8 +30,8 @@ public class RunMemberLoginHistDTO extends CommonDTO {
     private String loginResult;     // 로그인 결과 (성공/실패 등)
     private String returnMsg;       // 로그인 시 반환 메시지
     
-    public static RunMemberLoginHistDTO fromQueryDTO(RunMemberLoginHistQueryDTO queryDTO) {
-        RunMemberLoginHistDTO dto = new RunMemberLoginHistDTO();
+    public static ShinhanMemberLoginHistDTO fromQueryDTO(ShinhanMemberLoginHistQueryDTO queryDTO) {
+    	ShinhanMemberLoginHistDTO dto = new ShinhanMemberLoginHistDTO();
 
         // QueryDTO의 기본키(정수형)를 문자열로 변환(필요 시)
         dto.setLoginIdx(queryDTO.getLoginIdx() != null ? String.valueOf(queryDTO.getLoginIdx()) : null);

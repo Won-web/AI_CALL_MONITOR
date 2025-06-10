@@ -2,7 +2,7 @@ package com.shinhan.home.model.dto;
 
 import lombok.experimental.SuperBuilder;
 
-import com.shinhan.home.model.dto.querydto.RunUserTbQueryDTO;
+import com.shinhan.home.model.dto.querydto.ShinhanUserTbQueryDTO;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import com.shinhan.home.util.ParseUtil;
 @SuperBuilder
 @NoArgsConstructor
 @ToString
-public class RunUserTbDTO extends CommonDTO{
+public class ShinhanUserTbDTO extends CommonDTO{
 	
 	private String userIdx;
     private String emailId;
@@ -45,8 +45,8 @@ public class RunUserTbDTO extends CommonDTO{
     private String regType;
     
     // QueryDTO를 비즈니스로직용 DTO로 전환
-    public static RunUserTbDTO fromQueryDTO(RunUserTbQueryDTO queryDTO) {
-        RunUserTbDTO dto = new RunUserTbDTO();
+    public static ShinhanUserTbDTO fromQueryDTO(ShinhanUserTbQueryDTO queryDTO) {
+    	ShinhanUserTbDTO dto = new ShinhanUserTbDTO();
 
         dto.setUserIdx(queryDTO.getUserIdx() != null ? String.valueOf(queryDTO.getUserIdx()) : null);
         dto.setEmailId(queryDTO.getEmailId());

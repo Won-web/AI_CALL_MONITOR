@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import com.shinhan.home.util.common.SessionUtil;
-import com.shinhan.home.model.dto.RunUserTbDTO;
+import com.shinhan.home.model.dto.ShinhanUserTbDTO;
 
 public class LoginInterceptor implements HandlerInterceptor {
 

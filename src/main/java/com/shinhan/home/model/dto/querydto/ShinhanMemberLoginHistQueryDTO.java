@@ -7,14 +7,14 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import com.shinhan.home.util.ParseUtil;
 
-import com.shinhan.home.model.dto.RunMemberLoginHistDTO;
-import com.shinhan.home.model.entity.RunMemberLoginHistEntity;
+import com.shinhan.home.model.dto.ShinhanMemberLoginHistDTO;
+import com.shinhan.home.model.entity.ShinhanMemberLoginHistEntity;
 
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
-public class RunMemberLoginHistQueryDTO extends CommonQueryDTO {
+public class ShinhanMemberLoginHistQueryDTO extends CommonQueryDTO {
 	
 	private Integer loginIdx;
 	private String emailId;
@@ -25,8 +25,8 @@ public class RunMemberLoginHistQueryDTO extends CommonQueryDTO {
 	private String loginResult;
 	private String returnMsg;
 	
-	public static RunMemberLoginHistQueryDTO fromDTO(RunMemberLoginHistDTO dto) {
-	    RunMemberLoginHistQueryDTO queryDTO = new RunMemberLoginHistQueryDTO();
+	public static ShinhanMemberLoginHistQueryDTO fromDTO(ShinhanMemberLoginHistDTO dto) {
+		ShinhanMemberLoginHistQueryDTO queryDTO = new ShinhanMemberLoginHistQueryDTO();
 
 	    queryDTO.setLoginIdx(ParseUtil.parseInt(dto.getLoginIdx()));
 	    queryDTO.setEmailId(dto.getEmailId());
@@ -45,8 +45,8 @@ public class RunMemberLoginHistQueryDTO extends CommonQueryDTO {
 	    return queryDTO;
 	}
 
-	public RunMemberLoginHistEntity toEntity() {
-	    return RunMemberLoginHistEntity.builder()
+	public ShinhanMemberLoginHistEntity toEntity() {
+	    return ShinhanMemberLoginHistEntity.builder()
 	        .loginIdx(this.loginIdx)
 	        .emailId(this.emailId)
 	        .reqIp(this.reqIp)

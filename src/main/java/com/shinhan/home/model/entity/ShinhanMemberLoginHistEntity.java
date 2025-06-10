@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name = "run_member_login_hist")
+@Table(name = "shinhan_member_login_hist")
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RunMemberLoginHistEntity extends CommonEntity {
+public class ShinhanMemberLoginHistEntity extends CommonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
