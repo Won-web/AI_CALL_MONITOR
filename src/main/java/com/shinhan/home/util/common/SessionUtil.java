@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import com.shinhan.home.model.dto.ShinhanUserTbDTO;
 
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 @Component
 public class SessionUtil {
 
@@ -19,7 +22,7 @@ public class SessionUtil {
     }
 
     public boolean getSessionIdCheck(String userIdx, String sessionId) {
-    	ShinhanUserTbDTO userInfo = (ShinhanUserTbDTO) redisTemplate.opsForValue().get("RUN-" + userIdx);
+    	ShinhanUserTbDTO userInfo = (ShinhanUserTbDTO) redisTemplate.opsForValue().get("Shinhan-" + userIdx);
         if(userInfo != null) {
 			// 회원 정보가 있으면 세션 아이디 비교 후 다르면 중복 아이디(ture)
 			if(!userInfo.getSessionId().equals(sessionId)) {
@@ -30,11 +33,16 @@ public class SessionUtil {
     }
 
     public void chgUserInfo(String userIdx) {
-        redisTemplate.expire("RUN-" + userIdx, 2, TimeUnit.HOURS);
+    	ShinhanUserTbDTO userInfo = (ShinhanUserTbDTO) redisTemplate.opsForValue().get("Shinhan-" + userIdx);
+    	HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+    	if (userInfo != null) {
+	        userInfo.setSessionId(session.getId());
+	        redisTemplate.opsForValue().set("Shinhan-" + userIdx, userInfo, 10000, TimeUnit.HOURS);
+    	}    
     }
 
     public boolean delUserInfo(String userIdx, String sessionId) {
-    	ShinhanUserTbDTO userInfo = (ShinhanUserTbDTO) redisTemplate.opsForValue().get("RUN-" + userIdx);
+    	ShinhanUserTbDTO userInfo = (ShinhanUserTbDTO) redisTemplate.opsForValue().get("Shinhan-" + userIdx);
         if(userInfo != null) {
 			if(userInfo.getSessionId().equals(sessionId)) {
 				redisTemplate.delete(userIdx);
@@ -52,11 +60,11 @@ public class SessionUtil {
         redisUser.setUserIdx(input.getUserIdx());
         redisUser.setSessionId(session.getId());
 
-        redisTemplate.opsForValue().set("RUN-" + input.getUserIdx(), input, 120, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set("Shinhan-" + input.getUserIdx(), input, 120, TimeUnit.MINUTES);
     }
 
     public ShinhanUserTbDTO getUserInfo(String userIdx) {
-        return (ShinhanUserTbDTO) redisTemplate.opsForValue().get("RUN-" + userIdx);
+        return (ShinhanUserTbDTO) redisTemplate.opsForValue().get("Shinhan-" + userIdx);
     }
 
     public String getSessionId(HttpSession session) {

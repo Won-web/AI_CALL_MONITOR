@@ -87,7 +87,6 @@ public class UploadController {
 
 	        File finalUploadFile = tempPath.toFile(); // EC2로 보낼 실제 파일
 	        String finalAudioExt = audioExt;
-
 	        // 2. mp3인 경우 wav로 변환
 	        if (".mp3".equals(audioExt)) {
 	            String wavFileName = audioEncodedName + ".wav";
@@ -100,8 +99,10 @@ public class UploadController {
 
 	        // 3. EC2 업로드
 	        String remoteDir = sshRemoteDir + "/audio_path";
+	        String audioUrl = remoteDir+ "/" + finalUploadFile.getName();
 	        
 	        try {
+	        	// 1. 업로드
 	            SSHUploader.upload(
 	                finalUploadFile.getAbsolutePath(),
 	                remoteDir,
@@ -111,6 +112,39 @@ public class UploadController {
 	                sshPemPath,
 	                sshKeyPassphrase
 	            );
+	            // 2. .m4a인 경우 EC2에서 wav 변환
+	            if (".m4a".equals(finalAudioExt)) {
+	                String remoteM4a = remoteDir + "/" + finalUploadFile.getName();
+	                String remoteWav = remoteDir + "/" + audioEncodedName + ".wav";
+	                
+	                String convertCommand = String.format("ffmpeg -y -i '%s' '%s'", remoteM4a, remoteWav);
+	                SSHUploader.executeCommand(
+	                    sshHost,
+	                    sshPort,
+	                    sshUsername,
+	                    sshPemPath,
+	                    sshKeyPassphrase,
+	                    convertCommand
+	                );
+	                
+	                // 2. 변환된 후 원본 m4a 삭제
+	                String deleteCommand = String.format("rm -f '%s'", remoteM4a);
+	                SSHUploader.executeCommand(
+	                    sshHost,
+	                    sshPort,
+	                    sshUsername,
+	                    sshPemPath,
+	                    sshKeyPassphrase,
+	                    deleteCommand
+	                );
+
+	                finalAudioExt = ".wav";
+	                audioUrl = remoteWav;
+
+	                finalAudioExt = ".wav";
+	                audioUrl = remoteWav;
+	            } 
+
 	        } finally {
 	            // 업로드 후 임시 파일 삭제
 	            if (tempPath.toFile().exists()) {
@@ -124,7 +158,6 @@ public class UploadController {
 	        }
 
 	        // 4. URL 및 DTO 저장
-	        String audioUrl = remoteDir+ "/" + finalUploadFile.getName();
 
 	        ShinhanAudioInfoTbDTO dto = ShinhanAudioInfoTbDTO.builder()
 	                .audioId(audioId)
