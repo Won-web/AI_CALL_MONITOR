@@ -51,21 +51,22 @@ spring:
     cache: false
 
 file:
-  upload-dir: /uploads
+  upload-dir: C:/workspace_ai_run/shinhan_stt/uploads
+  #upload-dir: /uploads
 
 ssh:
   # host: 13.125.101.212
-  host: 52.32.143.206
+  host: 3.35.215.182
   port: 22
   username: ec2-user
-  pem-path: /uploads/skyand_ai_key_oregon.pem
+  pem-path: /uploads/skyand_ai_key.pem
   key-passphrase: "!skyand2024"
-  remote-dir: /home/ec2-user/python-sinhan
+  remote-dir: /home/ec2-user/shinhan-stt
 
 ai:
   server:
     # url: http://13.125.101.212:8200
-    url: http://52.32.143.206:8200
+    url: http://3.35.215.182:8200
     
 server:
   port: 18082
