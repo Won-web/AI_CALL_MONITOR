@@ -51,8 +51,8 @@ spring:
     cache: false
 
 file:
-  upload-dir: C:/workspace_ai_run/shinhan_stt/uploads
-  #upload-dir: /uploads
+  #upload-dir: C:/workspace_ai_run/shinhan_stt/uploads
+  upload-dir: /uploads
 
 ssh:
   # host: 13.125.101.212
@@ -60,6 +60,7 @@ ssh:
   port: 22
   username: ec2-user
   pem-path: /uploads/skyand_ai_key.pem
+  #pem-path: C:/workspace_ai_run/shinhan_stt/uploads/skyand_ai_key.pem
   key-passphrase: "!skyand2024"
   remote-dir: /home/ec2-user/shinhan-stt
 
