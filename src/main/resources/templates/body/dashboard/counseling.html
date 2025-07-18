@@ -1,11 +1,5 @@
 <!DOCTYPE html>
-
 <html lang="ko">
-
-
-
-
-
 <head>
     <!-- 필수 Meta 태그 -->
     <meta charset="UTF-8">
@@ -29,27 +23,12 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="/assets/css/swiper-bundle.min.css" />
     <!-- <link rel="stylesheet" type="text/css" href="/assets/css/rowGroup.dataTables.min.css"/> -->
-    
 
     <!-- 사용자 정의 스타일 -->
     <link rel="stylesheet" href="/assets/css/style.css?v=1.0">
-
-
-
 </head>
-
-
-
-
-
 <body>
-
-
-
-
-
     <header class="stt_header stt_m_menu_action_area">
-
         <section class="stt_header_logo">
             <div class="stt_header_logo_name">
                 <h4 class="stt_header_logo_name_title">
@@ -72,14 +51,23 @@
         </section>
 
         <section class="stt_header_info">
-
             <nav class="stt_header_info_menu">
-            	<a class="stt_header_info_menu_link" href="javascript:void(0);" onclick="openAudioPopup()">
-				    <p class="stt_header_info_menu_link_text">
-				    	AI 분석
-				    </p>
+            	<a class="stt_header_info_menu_link" href="javascript:void(0);" onclick="openPopup('http://1.214.89.182:7513/pages/L003', 'Monitoring')">
+					<p class="stt_header_info_menu_link_text">
+						점검결과 모니터링
+					</p>
 				</a>
-                <a class="stt_header_info_menu_link" href="/dashboard/home">
+            	<a class="stt_header_info_menu_link" href="javascript:void(0);" onclick="openPopup('http://1.214.89.182:7513/pages/L004', 'Detail')">
+					<p class="stt_header_info_menu_link_text">
+						점검내역 상세조회
+					</p>
+				</a>
+				<a class="stt_header_info_menu_link" href="javascript:void(0);" onclick="openAudioPopup()">
+					<p class="stt_header_info_menu_link_text">
+						AI 분석
+					</p>
+				</a>
+				<a class="stt_header_info_menu_link" href="/dashboard/home">
                     <p class="stt_header_info_menu_link_text">
                         대시보드
                     </p>
@@ -120,7 +108,6 @@
                     Logout
                 </button>
             </div>
-
         </section>
 
         <button class="stt_header_mbt bs_bt white_ver stt_m_menu_click">
@@ -128,33 +115,20 @@
             <div class="stt_header_mbt_second"></div>
             <div class="stt_header_mbt_third"></div>
         </button>
-
     </header>
 
-
-
-
-
-
-
-
-
-
     <main class="stt_body">
-
         <section class="stt_body_top">
             <h4 class="stt_body_top_title">
                 상담내역 상세
             </h4>
-            <div class="stt_body_top_option">              
-                <input type="date">              
+            <div class="stt_body_top_option">
+                <input type="date">
             </div>
         </section>
 
         <section class="stt_body_con horizontal_ver">
-
             <div class="horizontal_ver_li">
-
                 <div class="stt_body_con_ver_li_card">
                     <div class="stt_body_con_ver_li_card_title">
                         <h6 class="stt_body_con_ver_li_card_title_text">
@@ -437,11 +411,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <div class="horizontal_ver_li">
-
                 <div class="stt_body_con_ver_li_card ver02">
                     <div class="stt_body_con_ver_li_card_title">
                         <h6 class="stt_body_con_ver_li_card_title_text">
@@ -550,62 +522,42 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </section>
-
     </main>
 
+	<!-- 외부 라이브러리 및 스크립트 -->
+	<!-- Tippy.js --> <!-- Popper.js -->
+	<script src="/assets/js/jquery-3.7.1.min.js"></script>
+	<script src="/assets/js/select2.min.js"></script>
+	<script src="/assets/js/popper.min.js"></script>
+	<script src="/assets/js/tippy-bundle.umd.min.js"></script>
+	<script src="/assets/js/datatables.min.js"></script>
+	<!-- <script type="text/javascript" src="/assets/js/dataTables.rowGroup.min.js"></script> -->
+	<script src="/assets/js/swiper-bundle.min.js"></script>
+	<script src="/assets/js/gsap.min.js"></script>
+	<script src="/assets/js/Draggable.min.js"></script>
+	<script src="/assets/js/ScrollTrigger.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
-
-
-
-
-
-
-
-
-    <!-- 외부 라이브러리 및 스크립트 -->
-    <!-- Tippy.js --> <!-- Popper.js -->
-    <script src="/assets/js/jquery-3.7.1.min.js"></script>
-    <script src="/assets/js/select2.min.js"></script>
-    <script src="/assets/js/popper.min.js"></script>
-    <script src="/assets/js/tippy-bundle.umd.min.js"></script>
-    <script src="/assets/js/datatables.min.js"></script>
-    <!-- <script type="text/javascript" src="/assets/js/dataTables.rowGroup.min.js"></script> -->
-    <script src="/assets/js/swiper-bundle.min.js"></script>
-    <script src="/assets/js/gsap.min.js"></script>
-    <script src="/assets/js/Draggable.min.js"></script>
-    <script src="/assets/js/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-
-
-
-
-
-    <!-- Style Script -->
-    <script src="/assets/js/js_style.js"></script>
-
+	<!-- Style Script -->
+	<script src="/assets/js/js_style.js"></script>
 	<script type="text/javascript">
+		
+		// AI 분석 페이지 (window.open)
 		function openAudioPopup() {
-		    window.open(
-		        "/message/audio",
-		        "audioPopup",
-		        "width=1200,height=700,resizable=yes,scrollbars=yes"
-		    );
+			window.open(
+				"/message/audio",
+				"audioPopup",
+				"width=1200,height=700,resizable=yes,scrollbars=yes"
+			);
+		}
+		
+		// 윈도우 팝업 공통 (window.open)
+		function openPopup(url, title, style = "width=1500, height=1000, resizable=yes, scrollbars=yes") {
+			window.open(url, title, style);
 		}
 	</script>
-
-
-
-
-
 </body>
-
-
-
-
-
 </html>
