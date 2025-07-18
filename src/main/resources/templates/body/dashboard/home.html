@@ -438,19 +438,8 @@
                     </div>
                 </div>
             </div>
-
         </section>
-
     </main>
-
-
-
-
-
-
-
-
-
 
     <!-- 외부 라이브러리 및 스크립트 -->
     <!-- Tippy.js --> <!-- Popper.js -->
@@ -467,17 +456,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
-
-
-
-
     <!-- Style Script -->
     <script src="/assets/js/js_style.js"></script>
-
-
-
-
-
     <script>
         // Chart.js를 사용하여 도넛 차트 생성 
         const doughnutData = {
@@ -526,17 +506,7 @@
 
   new Chart(document.getElementById('myDoughnutChart'), doughnutConfig);
 
-
-
-
-
-  
-  
-
-
-
   const stackedLabels = Array.from({ length: 16 }, () => '2025-05-01');
-
   const stackedData = {
     labels: stackedLabels,
     datasets: [
@@ -633,7 +603,6 @@
   const stackedCtx = document.getElementById('stackedBarChart').getContext('2d');
   new Chart(stackedCtx, stackedConfig);
 
-
   // 카테고리별 건수 글자 위치 설정
   function checkBarOverflow() {
     const results = document.querySelectorAll('.dh_chart_02_item_chart_bar_number');
@@ -675,7 +644,7 @@
   }
   
   // 윈도우 팝업 공통 (window.open)
-  function openPopup(url, title, style = "width=1200, height=700, resizable=yes, scrollbars=yes") {
+  function openPopup(url, title, style = "width=1500, height=1000, resizable=yes, scrollbars=yes") {
     window.open(url, title, style);
   }
     </script>
