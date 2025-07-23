@@ -33,7 +33,6 @@ API: RESTful API
 기타:
 
 #[AI 콜 모니터링 PPT](docs/AI콜모니터링_기능소개.pptx)
-[AI 콜 모니터링 PPT 파일 다운로드](https://github.com/Won-web/AI_CALL_MONITOR/blob/master/docs/AI콜모니터링_기능소개.pptx)
 고객 상담 내역 분석, AI 모델 학습 및 배포 과정, 실시간 데이터 분석 시스템 등이 포함되어 있습니다.
 
 #시스템 대시보드 URL
