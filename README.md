@@ -31,6 +31,9 @@ API: RESTful API
 인증: 사용자 인증 (기타 요구 사항에 맞춰 추가 예정)
 
 기타:
-시스템에 대한 각 화면은 기능소개.ppt에서 확인 할 수 있습니다.
+#[AI 콜 모니터링 PPT 파일](docs/AI콜모니터링_기능소개.pptx)
+이 PPT에는 **고객 상담 내역 분석**, **AI 모델 학습 및 배포 과정**, **실시간 데이터 분석 시스템** 등이 포함되어 있습니다.
+#시스템 대시보드 URL
+[AI 콜 모니터링 대시보드](http://dev.skyand.co.kr:8012/dashboard)
 
-http://dev.skyand.co.kr:8012/dashboard
+
